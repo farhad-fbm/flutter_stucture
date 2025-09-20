@@ -20,9 +20,9 @@ This repository provides a well-organized boilerplate to speed up development an
 
 
 2. **Install dependencies & Run**
-```
-flutter pub get
-```
-```
-flutter run
-```
+   ```
+   flutter pub get
+   ```
+   ```
+   flutter run
+   ```
