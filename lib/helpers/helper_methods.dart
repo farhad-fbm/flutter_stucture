@@ -6,7 +6,7 @@ import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+// import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:http/http.dart' as http;
@@ -204,16 +204,16 @@ Future<List<XFile>?> pickMultipleImages() async {
   }
 }
 
-Future<void> textToSpeech(String text) async {
-  try {
-    FlutterTts flutterTts = FlutterTts();
-    List<dynamic> voices = await flutterTts.getVoices;
-    await flutterTts.setVolume(1);
-    await flutterTts.speak(text);
-  } catch (e) {
-    null;
-  }
-}
+// Future<void> textToSpeech(String text) async {
+//   try {
+//     FlutterTts flutterTts = FlutterTts();
+//     List<dynamic> voices = await flutterTts.getVoices;
+//     await flutterTts.setVolume(1);
+//     await flutterTts.speak(text);
+//   } catch (e) {
+//     null;
+//   }
+// }
 Future<dio.MultipartFile?> convertToMultipartFile(XFile? file) async {
   if (file == null) return null;
 
@@ -223,29 +223,29 @@ Future<dio.MultipartFile?> convertToMultipartFile(XFile? file) async {
   );
 }
 
-Future<void> textToChinseSpeech(String text) async {
-  try {
-    FlutterTts flutterTts = FlutterTts();
-    await flutterTts.setLanguage("zh-CN");
-    await flutterTts.setPitch(1.0);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setVolume(1.0);
+// Future<void> textToChinseSpeech(String text) async {
+//   try {
+//     FlutterTts flutterTts = FlutterTts();
+//     await flutterTts.setLanguage("zh-CN");
+//     await flutterTts.setPitch(1.0);
+//     await flutterTts.setSpeechRate(0.5);
+//     await flutterTts.setVolume(1.0);
 
-    List<dynamic> voices = await flutterTts.getVoices;
+//     List<dynamic> voices = await flutterTts.getVoices;
 
-    var chineseVoice = voices.firstWhere(
-      (voice) => voice["locale"] == "zh-CN",
-      orElse: () => null,
-    );
+//     var chineseVoice = voices.firstWhere(
+//       (voice) => voice["locale"] == "zh-CN",
+//       orElse: () => null,
+//     );
 
-    if (chineseVoice != null) {
-      await flutterTts.setVoice(Map<String, String>.from(chineseVoice));
-    }
-    await flutterTts.speak(text);
-  } catch (e) {
-    print("TTS error: $e");
-  }
-}
+//     if (chineseVoice != null) {
+//       await flutterTts.setVoice(Map<String, String>.from(chineseVoice));
+//     }
+//     await flutterTts.speak(text);
+//   } catch (e) {
+//     print("TTS error: $e");
+//   }
+// }
 
 String formatDate(DateTime date) {
   String day = date.day.toString().padLeft(2, '0');
