@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../gen/assets.gen.dart';
 import '../helpers/navigation_service.dart';
-import 'loading_indicators.dart';
+import 'custom_circle_loader.dart';
 
 class NotFoundWidget extends StatelessWidget {
   const NotFoundWidget({

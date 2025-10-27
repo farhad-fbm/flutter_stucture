@@ -223,30 +223,6 @@ Future<dio.MultipartFile?> convertToMultipartFile(XFile? file) async {
   );
 }
 
-// Future<void> textToChinseSpeech(String text) async {
-//   try {
-//     FlutterTts flutterTts = FlutterTts();
-//     await flutterTts.setLanguage("zh-CN");
-//     await flutterTts.setPitch(1.0);
-//     await flutterTts.setSpeechRate(0.5);
-//     await flutterTts.setVolume(1.0);
-
-//     List<dynamic> voices = await flutterTts.getVoices;
-
-//     var chineseVoice = voices.firstWhere(
-//       (voice) => voice["locale"] == "zh-CN",
-//       orElse: () => null,
-//     );
-
-//     if (chineseVoice != null) {
-//       await flutterTts.setVoice(Map<String, String>.from(chineseVoice));
-//     }
-//     await flutterTts.speak(text);
-//   } catch (e) {
-//     print("TTS error: $e");
-//   }
-// }
-
 String formatDate(DateTime date) {
   String day = date.day.toString().padLeft(2, '0');
   String month = date.month.toString().padLeft(2, '0');

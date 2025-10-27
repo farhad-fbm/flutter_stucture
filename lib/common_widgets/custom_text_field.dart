@@ -2,151 +2,130 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constants/text_font_style.dart';
+
 import '../gen/colors.gen.dart';
-import '../helpers/ui_helpers.dart';
 
-// ...existing code...
-class CustomField extends StatefulWidget {
-  final String? label;
-  final String hintText;
-  final TextEditingController? controller;
+enum FieldType { email, password, confirmPassword }
+
+class CustomTextField extends StatelessWidget {
+  final String? labelText;
+  final String? prefixIconPath;
+  final String? suffixIconPath;
+  final String? hintText;
+  final Color? fillColor;
+  final Color? borderColor;
+  final double? borderRadius;
+  final double? vPadding;
+  final TextEditingController controller;
+  final TextEditingController? confirmPasswordController;
+  final FieldType? fieldType;
+  final bool isPassword;
   final bool obscureText;
-  final Widget? suffixIcon;
-  final Widget? prefixIcon;
+  final bool toggleVisible;
+  final TextInputType keyboardType;
+  final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
+  final VoidCallback? onSuffixIconPressed;
+  final bool readonly;
+  final VoidCallback? onTap;
   final int? maxLines;
-  final Widget? labelWithIcon;
-  final TextStyle? labelTextStyle;
-  final bool isOptional;
-  final void Function(String)? onSubmitted;
-  final bool editableHintText; // <-- Add this
 
-  const CustomField({
+  const CustomTextField({
     super.key,
-    this.label,
-    required this.hintText,
-    this.controller,
+    this.labelText,
+    this.prefixIconPath,
+    this.suffixIconPath,
+    this.hintText,
+    this.fillColor = AppColors.c3A3A45,
+    this.borderColor,
+    this.borderRadius = 8,
+    this.vPadding = 16,
+    required this.controller,
+    this.confirmPasswordController,
+    this.fieldType,
+    this.isPassword = false,
     this.obscureText = false,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.maxLines = 1,
-    this.labelWithIcon,
-    this.labelTextStyle,
-    this.isOptional = false,
-    this.onSubmitted,
-    this.editableHintText = false, // <-- Add this
+    this.toggleVisible = false,
+    this.keyboardType = TextInputType.text,
+    this.onChanged,
+    this.validator,
+    this.onSuffixIconPressed,
+    this.readonly = false,
+    this.onTap,
+    this.maxLines,
   });
 
   @override
-  State<CustomField> createState() => _CustomFieldState();
-}
-
-class _CustomFieldState extends State<CustomField> {
-  late TextEditingController _controller;
-  late FocusNode _focusNode;
-  bool _hasEdited = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = widget.controller ?? TextEditingController();
-    _focusNode = FocusNode();
-
-    if (widget.editableHintText && (_controller.text.isEmpty)) {
-      _controller.text = widget.hintText;
-    }
-
-    _focusNode.addListener(() {
-      if (widget.editableHintText) {
-        if (_focusNode.hasFocus &&
-            !_hasEdited &&
-            _controller.text == widget.hintText) {
-          _controller.clear();
-          setState(() {
-            _hasEdited = true;
-          });
-        } else if (!_focusNode.hasFocus && _controller.text.isEmpty) {
-          _controller.text = widget.hintText;
-          setState(() {
-            _hasEdited = false;
-          });
-        }
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    if (widget.controller == null) {
-      _controller.dispose();
-    }
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.label != null || widget.labelWithIcon != null)
-          widget.labelWithIcon ??
-              Text(
-                widget.label ?? "",
-                style:
-                    widget.labelTextStyle ??
-                    TextFontStyle.textStyle14c0E1216Poppins400,
-              ),
-        UIHelper.verticalSpace(10.h),
-        TextFormField(
-          controller: _controller,
-          focusNode: _focusNode,
-          onFieldSubmitted: widget.onSubmitted,
-          validator:
-              widget.isOptional
-                  ? null
-                  : (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter some text';
-                    }
-                    return null;
-                  },
-          style: TextFontStyle.textStyle12cA3A3A3Poppins400.copyWith(
-            color:
-                (_hasEdited || _controller.text != widget.hintText)
-                    ? AppColors.c000000CC
-                    : Colors.grey,
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8.h),
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        onChanged: onChanged,
+        validator: validator,
+        readOnly: readonly,
+        onTap: onTap,
+        maxLines: maxLines ?? 1,
+        cursorColor: AppColors.cFFFFFF,
+        style: TextFontStyle.textStyle14c0184FFPoppins500,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 20.r,
+            vertical: vPadding?.r ?? 16.r,
           ),
-          maxLines: widget.maxLines,
-          textAlign:
-              widget.prefixIcon != null ? TextAlign.end : TextAlign.start,
-          decoration: InputDecoration(
-            fillColor: AppColors.cFFFFFF,
-            suffixIcon: widget.suffixIcon,
-            prefixIcon: widget.prefixIcon,
-            hintText: widget.editableHintText ? null : widget.hintText,
-            hintStyle: TextFontStyle.textStyle12cA3A3A3Poppins400.copyWith(
-              color: AppColors.c000000CC,
-            ),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(color: AppColors.cEAEAEA),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(color: AppColors.cEAEAEA),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8.r),
-              borderSide: const BorderSide(color: AppColors.cEAEAEA),
-            ),
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 20.w,
-              vertical: 15.h,
+          labelText: labelText,
+          // floatingLabelBehavior: FloatingLabelBehavior.always, //------
+          labelStyle: TextFontStyle.textStyle14c071431Poppins400,
+          hintText: hintText,
+          hintStyle: TextFontStyle.textStyle14c071431Poppins600,
+
+          filled: true,
+          fillColor: fillColor,
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius!),
+            borderSide: BorderSide(
+              color: borderColor ?? Colors.transparent,
+              width: 1.5,
             ),
           ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(borderRadius!.r),
+            borderSide: BorderSide(
+              color: borderColor ?? Colors.transparent,
+              width: 2,
+            ),
+          ),
+          prefixIcon:
+              prefixIconPath != null
+                  ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                    child: Image.asset(
+                      prefixIconPath!,
+                      width: 20.w,
+                      height: 20.h,
+                      fit: BoxFit.contain,
+                      color: AppColors.cFFFFFF,
+                    ),
+                  )
+                  : null,
+
+          suffixIcon:
+              suffixIconPath != null
+                  ? toggleVisible
+                      ? IconButton(
+                        iconSize: 0.r,
+                        icon: Image.asset(
+                          suffixIconPath!,
+                          color: AppColors.cFFFFFF,
+                        ),
+                        onPressed: onSuffixIconPressed,
+                      )
+                      : Image.asset(suffixIconPath!, color: AppColors.cFFFFFF)
+                  : null,
         ),
-      ],
+      ),
     );
   }
 }
-// ...existing code...

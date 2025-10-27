@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+  <!-- Root element -->
+  <xs:element name="colors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="color" maxOccurs="unbounded">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+
+    <!-- Enforce unique color names -->
+    <xs:unique name="uniqueColorName">
+      <xs:selector xpath="color"/>
+      <xs:field xpath="@name"/>
+    </xs:unique>
+  </xs:element>
+
+</xs:schema>

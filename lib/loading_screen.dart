@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '/welcome_screen.dart';
+import 'common_widgets/custom_onboarding.dart';
 import 'constants/app_constants.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/post_login.dart';
-import 'navigation_screen.dart';
 import 'networks/dio/dio.dart';
+import 'welcome_screen.dart';
 
 final class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -53,22 +53,17 @@ class _LoadingState extends State<Loading> {
   void _handleLogout() {
     appData.write(kKeyIsLoggedIn, false);
 
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => LogInScreen()),
-    // );
+   
   }
 
   @override
+ 
   Widget build(BuildContext context) {
     if (_isLoading) {
       return const WelcomeScreen();
     } else {
-      return appData.read(kKeyIsLoggedIn)
-          ? const NavigationScreen()
-          // : appData.read(kKeyfirstTime)
-          // ? const OnboardingScreen()
-          : const NavigationScreen();
+      return const OnboardingScreen();
+      
     }
   }
 }

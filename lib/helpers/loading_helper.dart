@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../common_widgets/loading_indicators.dart';
+import '../common_widgets/custom_circle_loader.dart';
 
 import 'navigation_service.dart';
 
