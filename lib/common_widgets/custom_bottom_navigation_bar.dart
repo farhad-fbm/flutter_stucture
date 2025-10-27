@@ -4,16 +4,16 @@ import '../../gen/colors.gen.dart';
 import '../../helpers/ui_helpers.dart';
 import '../../gen/assets.gen.dart';
 
-class CustomBottomNavbar extends StatefulWidget {
+class CustomBottomNavigationBar extends StatefulWidget {
   final int activeIndex;
 
-  const CustomBottomNavbar({this.activeIndex = 0, super.key});
+  const CustomBottomNavigationBar({this.activeIndex = 0, super.key});
 
   @override
-  State<CustomBottomNavbar> createState() => _CustomBottomNavbarState();
+  State<CustomBottomNavigationBar> createState() => _CustomBottomNavigationBarState();
 }
 
-class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
+class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
   late int currentIndex;
 
   @override
