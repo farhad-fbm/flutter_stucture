@@ -15,7 +15,7 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final Color? borderColor;
   final double? borderRadius;
-  final double? vPadding;
+  final double? paddingVertical;
   final TextEditingController controller;
   final TextEditingController? confirmPasswordController;
   final FieldType? fieldType;
@@ -39,7 +39,7 @@ class CustomTextField extends StatelessWidget {
     this.fillColor = AppColors.c3A3A45,
     this.borderColor,
     this.borderRadius = 8,
-    this.vPadding = 16,
+    this.paddingVertical = 16,
     required this.controller,
     this.confirmPasswordController,
     this.fieldType,
@@ -69,17 +69,17 @@ class CustomTextField extends StatelessWidget {
         onTap: onTap,
         maxLines: maxLines ?? 1,
         cursorColor: AppColors.cFFFFFF,
-        style: TextFontStyle.textStyle14c0184FFPoppins500,
+        style: TextFontStyle.textStyle14cFFFFFFInterRegular400,
         decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(
             horizontal: 20.r,
-            vertical: vPadding?.r ?? 16.r,
+            vertical: paddingVertical?.r ?? 16.r,
           ),
           labelText: labelText,
           // floatingLabelBehavior: FloatingLabelBehavior.always, //------
-          labelStyle: TextFontStyle.textStyle14c071431Poppins400,
+          labelStyle: TextFontStyle.textStyle14c828282NunitoRegular400,
           hintText: hintText,
-          hintStyle: TextFontStyle.textStyle14c071431Poppins600,
+          hintStyle: TextFontStyle.textStyle14c828282NunitoRegular400,
 
           filled: true,
           fillColor: fillColor,
@@ -113,17 +113,26 @@ class CustomTextField extends StatelessWidget {
 
           suffixIcon:
               suffixIconPath != null
-                  ? toggleVisible
-                      ? IconButton(
-                        iconSize: 0.r,
-                        icon: Image.asset(
-                          suffixIconPath!,
-                          color: AppColors.cFFFFFF,
-                        ),
-                        onPressed: onSuffixIconPressed,
-                      )
-                      : Image.asset(suffixIconPath!, color: AppColors.cFFFFFF)
+                  ? InkWell(
+                    onTap: onSuffixIconPressed,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.w),
+                      child: Image.asset(
+                        suffixIconPath!,
+                        width: 16.w,
+                        height: 16.h,
+                        fit: BoxFit.contain,
+                        color: AppColors.cFFFFFF,
+                      ),
+                    ),
+                  )
                   : null,
+          suffixIconConstraints: BoxConstraints(
+            maxWidth: 40.w,
+            maxHeight: 40.h,
+            minWidth: 40.w,
+            minHeight: 40.h,
+          ),
         ),
       ),
     );
