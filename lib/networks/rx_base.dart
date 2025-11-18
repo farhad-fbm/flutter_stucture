@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:rxdart/subjects.dart';
 
 abstract class RxResponseInt<T> {

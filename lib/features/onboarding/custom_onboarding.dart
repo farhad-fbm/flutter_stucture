@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../constants/text_font_style.dart';
-import '../../../gen/colors.gen.dart';
-import '../../../helpers/ui_helpers.dart';
+import '../../gen/assets.gen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -18,19 +16,19 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<Map<String, String>> onboardingData = [
     {
-      "image": "assets/images/onboarding1.png",
+      "image": Assets.images.onboarding1.path,
       "title": "Scan Any Key Instantly",
       "subtitle":
           "Use your mobile camera to detect key type and pattern in seconds.",
     },
     {
-      "image": "assets/images/onboarding2.png",
+      "image": Assets.images.onboarding2.path,
       "title": "Get Accurate Key Codes",
       "subtitle":
           "AI identifies manufacturer and key code with precise bitting details.",
     },
     {
-      "image": "assets/images/onboarding3.png",
+      "image": Assets.images.onboarding3.path,
       "title": "Save & Manage Your History",
       "subtitle":
           "Keep all your scanned keys organized, documented, and ready anytime.",
@@ -58,11 +56,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             : onboardingData.first;
 
     return Scaffold(
-      backgroundColor: AppColors.bgColor,
+      backgroundColor: Colors.white,
+      extendBody: true,
       body: SafeArea(
+        bottom: false,
         child: Stack(
           children: [
-            /// PageView controlling image only (swipeable)
             PageView.builder(
               controller: _pageController,
               itemCount: onboardingData.length,
@@ -100,7 +99,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               },
             ),
 
-            /// --- Bottom Content Panel (fixed) ---
             Align(
               alignment: Alignment.bottomCenter,
               child: Column(
@@ -109,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 2.h,
-                    child: Container(color: AppColors.c828282),
+                    child: Container(color: const Color(0xFF828282)),
                   ),
                   Container(
                     width: double.infinity,
@@ -118,11 +116,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       horizontal: 24.w,
                       vertical: 28.h,
                     ),
-                    decoration: BoxDecoration(color: AppColors.bgColor),
+                    decoration: const BoxDecoration(color: Colors.white),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        /// --- Page Indicator ---
                         Row(
                           children: List.generate(
                             onboardingData.length,
@@ -134,59 +131,71 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                               decoration: BoxDecoration(
                                 color:
                                     _currentPage == i
-                                        ? AppColors.cF4D915
-                                        : AppColors.cFFFFFF,
+                                        ? const Color(0xFFF4D915)
+                                        : const Color(0xFFFFFFFF),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
                           ),
                         ),
 
-                        UIHelper.verticalSpace(24.h),
+                        SizedBox(height: 24.h),
 
                         _buildAnimatedText(
                           data["title"]!,
-                          TextFontStyle.textStyle24c0184FFPoppins500,
+                          const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFEFEFE),
+                            fontFamily: 'PlusJakartaSans',
+                          ),
                         ),
-                        UIHelper.verticalSpace(12.h),
+                        SizedBox(height: 12.h),
                         _buildAnimatedText(
                           data["subtitle"]!,
-                          TextFontStyle.textStyle18c071431Poppins600,
+                          const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.normal,
+                            color: Color(0xFF6F8FE8),
+                            fontFamily: 'PlusJakartaSans',
+                          ),
                         ),
 
                         const Spacer(),
 
-                        /// --- Buttons ---
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
                               child: ElevatedButton(
-                                onPressed: () {
-                                  debugPrint("Onboarding Skipped");
-                                  // NavigationService.navigateTo(Routes.authHome);
-                                },
+                                onPressed: () {},
+                                // () => NavigationService.navigateTo(
+                                //   Routes.authHome,
+                                // ),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.cFFFBE0,
+                                  backgroundColor: const Color(0xFFFFFBE0),
                                   padding: EdgeInsets.symmetric(vertical: 14.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16.r),
                                   ),
                                 ),
-                                child: Text(
+                                child: const Text(
                                   "Skip",
-                                  style:
-                                      TextFontStyle
-                                          .textStyle16c0184FFPoppins600,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF171725),
+                                    fontFamily: 'PlusJakartaSans',
+                                  ),
                                 ),
                               ),
                             ),
-                            UIHelper.horizontalSpace(24.w),
+                            SizedBox(width: 24.w),
                             Expanded(
                               child: ElevatedButton(
                                 onPressed: _nextPage,
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.cF4D915,
+                                  backgroundColor: const Color(0xFFF4D915),
                                   padding: EdgeInsets.symmetric(vertical: 14.h),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(16.r),
@@ -196,9 +205,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                   _currentPage == onboardingData.length - 1
                                       ? "Get Started"
                                       : "Continue",
-                                  style:
-                                      TextFontStyle
-                                          .textStyle16c0184FFPoppins700,
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    color: Color(0xFF171725),
+                                    fontFamily: 'PlusJakartaSans',
+                                  ),
                                 ),
                               ),
                             ),
@@ -217,8 +229,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
-// ----------------------
-/// Reusable smooth slide-fade transition
 Widget _buildAnimatedText(String text, TextStyle style) {
   return AnimatedSwitcher(
     duration: const Duration(milliseconds: 50),

@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../common_widgets/custom_text_field.dart';
-import '../../../../../constants/text_font_style.dart';
-
-import '../../../../../constants/validator.dart';
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/colors.gen.dart';
-import '../../../../../helpers/all_routes.dart';
-import '../../../../../helpers/navigation_service.dart';
-import '../../../../../helpers/ui_helpers.dart';
 import '../../../common_widgets/custom_button.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../helpers/all_routes.dart';
+import '../../../helpers/navigation_service.dart';
+import 'widgets/auth_back_button.dart';
+import 'widgets/auth_screen_title.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   const ResetPasswordScreen({super.key});
@@ -38,78 +35,57 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.cFFFFFF,
+      backgroundColor: const Color(0xFFFFFFFF),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UIHelper.verticalSpace(32.h),
-            InkWell(
-              onTap: () => NavigationService.goBack,
-              child: Image.asset(
-                Assets.icons.arrowBack.path,
-                height: 17.h,
-                width: 10.w,
-                // color: AppColors.c212121,
-              ),
-            ),
-            UIHelper.verticalSpace(24.h),
+            SizedBox(height: 32.h),
+            const AuthBackButton(),
+            SizedBox(height: 24.h),
 
-            // Title
-            Text(
-              'Reset password',
-              style: TextFontStyle.textStyle32c212121Poppins700,
-            ),
-
-            UIHelper.verticalSpace(16.h),
+            const AuthScreenTitle(title: 'Reset password'),
+            SizedBox(height: 24.h),
 
             // Form
             Form(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'New Password',
-                    style: TextFontStyle.textStyle16c0184FFPoppins400,
-                  ),
-                  UIHelper.verticalSpace(10.h),
                   CustomTextField(
+                    upperTitle: 'New Password',
                     hintText: 'password',
                     controller: _passwordController,
                     obscureText: !_isPasswordVisible,
-                    validator: passwordValidator,
+                    // validator: passwordValidator,
                     isPassword: true,
                     toggleVisible: true,
-                    prefixIconPath: Assets.icons.passwordicon.path,
+                    // prefixIconPath: '',
                     suffixIconPath:
                         _isPasswordVisible
-                           ? Assets.icons.eyeShow.path
+                            ? Assets.icons.eyeShow.path
                             : Assets.icons.eyeHide.path,
                     onSuffixIconPressed: () {
                       setState(() => _isPasswordVisible = !_isPasswordVisible);
                     },
                   ),
 
-                  UIHelper.verticalSpace(16.h),
+                  SizedBox(height: 16.h),
 
-                  Text(
-                    'Confirm New password',
-                    style: TextFontStyle.textStyle16c0184FFPoppins700,
-                  ),
-                  UIHelper.verticalSpace(10.h),
                   CustomTextField(
+                    upperTitle: 'Confirm New Password',
                     hintText: 'Confirm password',
                     controller: _confirmPasswordController,
                     obscureText: !_isConfirmPasswordVisible,
-                    validator:
-                        (v) => confirmPasswordValidator(
-                          v,
-                          _passwordController.text,
-                        ),
+                    // validator:
+                    //     (v) => confirmPasswordValidator(
+                    //       v,
+                    //       _passwordController.text,
+                    //     ),
                     isPassword: true,
                     toggleVisible: true,
-                    prefixIconPath: Assets.icons.passwordicon.path,
+                    // prefixIconPath: '',
                     suffixIconPath:
                         _isConfirmPasswordVisible
                             ? Assets.icons.eyeShow.path
@@ -126,9 +102,14 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               ),
             ),
 
-            UIHelper.verticalSpace(24.h),
-            CustomButton(text: 'Continue', onPressed: () {}, borderRadius: 0.r),
-            UIHelper.verticalSpace(12.h),
+            SizedBox(height: 24.h),
+            CustomButton(
+              text: 'Continue',
+              onPressed: () {
+                NavigationService.navigateTo(Routes.authHome);
+              },
+            ),
+            SizedBox(height: 12.h),
           ],
         ),
       ),

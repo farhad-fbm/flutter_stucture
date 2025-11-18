@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart' as getx;
 import '../endpoints.dart';
 import 'log.dart';
 
@@ -23,20 +24,17 @@ final class DioSingleton {
       },
     );
 
-    dio =
-        Dio(options)
-          ..interceptors.add(Logger())
-          ..interceptors.add(
-            InterceptorsWrapper(
-              onError: (error, handler) {
-                if (_isGlobalError(error)) {
-                  _handleGlobalError(error);
-                  return handler.reject(error);
-                }
-                return handler.next(error);
-              },
-            ),
-          );
+    dio = Dio(options)
+      ..interceptors.add(Logger())
+      ..interceptors.add(InterceptorsWrapper(
+        onError: (error, handler) {
+          if (_isGlobalError(error)) {
+            _handleGlobalError(error);
+            return handler.reject(error);
+          }
+          return handler.next(error);
+        },
+      ));
   }
 
   void update(String auth) {
@@ -54,20 +52,17 @@ final class DioSingleton {
       receiveTimeout: const Duration(milliseconds: 100000),
     );
 
-    dio =
-        Dio(options)
-          ..interceptors.add(Logger())
-          ..interceptors.add(
-            InterceptorsWrapper(
-              onError: (error, handler) {
-                if (_isGlobalError(error)) {
-                  _handleGlobalError(error);
-                  return handler.reject(error);
-                }
-                return handler.next(error);
-              },
-            ),
-          );
+    dio = Dio(options)
+      ..interceptors.add(Logger())
+      ..interceptors.add(InterceptorsWrapper(
+        onError: (error, handler) {
+          if (_isGlobalError(error)) {
+            _handleGlobalError(error);
+            return handler.reject(error);
+          }
+          return handler.next(error);
+        },
+      ));
   }
 
   bool _isGlobalError(DioException error) {
@@ -94,11 +89,11 @@ final class DioSingleton {
     // }
   }
 
-  // void _navigateToScreen(String route) {
-  //   if (getx.Get.currentRoute != route) {
-  //     getx.Get.offAllNamed(route);
-  //   }
-  // }
+  void navigateToScreen(String route) {
+    if (getx.Get.currentRoute != route) {
+      getx.Get.offAllNamed(route);
+    }
+  }
 }
 
 // Simplified HTTP methods - global errors are already handled by interceptor

@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
-const String url = "https://miskstoreg.softvencefsd.xyz";
+const String url = "https://parvirk.softvencefsd.xyz";
 
 final class NetworkConstants {
   NetworkConstants._();
@@ -17,44 +17,35 @@ final class NetworkConstants {
 final class Endpoints {
   Endpoints._();
   //backend_url
-  // static String signUp() => "/api/register";
-  // static String logIn() => "/api/login";
+  static String signUp() => "/api/register";
+  static String logIn() => "/api/login";
+  static String logout() => "/api/logout";
+  static String social() => "/api/social/media";
+  static String forgetPassword() => "/api/password/forgot";
+  static String resendOtp() => "/api/password/resend-otp";
+  static String verifyOtp() => "/api/password/verify-otp";
+  static String resetPassword() => "/api/password/reset";
+  static String profile() => "/api/user/profile/get";
+  static String updateProfile() => "/api/profile/update/user";
+  static String changePassword() => "/api/password/update/user";
+  static String support() => "/api/contact-form";
+  static String questionaries() => "/api/all/questions";
+  static String questionAnswer() => "/api/questions/answer";
+  static String articles() => "/api/article/list";
+  static String products() => "/api/product/list/retrieve";
+  static String addToCart() => "/api/add/to/cart";
+  static String cartList() => "/api/cart/list";
+  static String plusCart() => "/api/cart/qty/plus";
+  static String minusCart() => "/api/cart/qty/minus";
+  static String removeCart() => "/api/remove/cart/item";
+  static String checkout() => "/api/checkout";
+  static String orderList() => "/api/order/list";
+  static String chatList() => "/api/chat/list";
+  static String sendMessage() => "/api/chat/send";
+  static String getChat(String conversationId) =>
+      "/api/chat/get/$conversationId";
   // static String getShopByCategories(String slug) =>
   //     "/api/shop-categories/$slug/";
 
-  static String logIn() => "/api/users/login";
-  static String signUp() => "/api/users/register";
-  static String forgetPassword() => "/api/users/login/email-verify";
-  static String otpVerify() => "/api/users/login/otp-verify";
-  static String resetPassword() => "/api/users/login/reset-password";
-  static String resumeTemplate() => "/api/resume-templates";
-  static String faq() => "/api/faq/all";
-  static String interviewAi() => "/api/ai-interviewer";
-  static String interviewPreparation() =>
-      "/api/interview-preparation-assistant";
-  static String chatAi() => "/api/chat-history";
-  static String recentActivity() => "/api/all-recent-activities";
-  static String pofileUpdate() => "/api/users/data/update";
-  static String logout() => "/api/users/logout";
-  static String changePassword() => "/api/users/password/change";
-  static String profileInfo() => "/api/users/data";
-  static String documents() => "/api/all-documents";
-  static String coverLetter() => "/api/generate-cover-letter";
-  static String saveDraft() => "/api/interview-question-draft";
-  static String draft() => "/api/all-drafts";
-  static String jobMatcher() => "/api/job-matching";
-  static String linkdinOptimization() => "/api/linkedin-profile-optimizer";
-  static String subscription() => "/api/subscription-plans";
-  static String deleteAccount() => "/api/users/delete";
-  static String pushNotification() => "/api/update-notification";
-  static String interviewNotification() => "/api/update-interview-preparation";
-  static String expringSubscription() => "/api/update-expiring-subscription";
-  static String applicationDeadline() => "/api/update-application-deadline";
-  static String emailNotification() => "/api/update-email-notification";
-  static String notification() => "/api/all-notifications";
-  static String createResume(int resumeId) => "/api/generate/$resumeId/pdf/app";
-  static String viewDocument(id) => "/api/export-document/$id";
-  static String deleteDraft(id) => "/api/delete-draft/$id";
-  static String applayChange(id) => "/api/apply-changes-app/$id";
-  static String payment(subscriptionPlanId) => "/api/subscription-plan/$subscriptionPlanId/payment";
+  static String example() => "/api/";
 }

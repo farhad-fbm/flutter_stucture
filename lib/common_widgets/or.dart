@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '/constants/text_font_style.dart';
 import '/helpers/ui_helpers.dart';
 
 class OrDivider extends StatelessWidget {
@@ -17,7 +16,12 @@ class OrDivider extends StatelessWidget {
         UIHelper.horizontalSpace(11.w),
         Text(
           txt ?? 'or',
-          style: TextFontStyle.textStyle16c0184FFPoppins700,
+          style: TextStyle(
+            fontSize: 14.sp,
+            color: const Color(0xFF0184FF),
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Poppins',
+          ),
         ),
         UIHelper.horizontalSpace(11.w),
 

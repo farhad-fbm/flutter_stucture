@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:auto_animated/auto_animated.dart';
-import 'constants/custom_theme.dart';
-import 'gen/colors.gen.dart';
 import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
@@ -14,12 +13,20 @@ import 'networks/dio/dio.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // ----------to remove black bars on older android
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // ----------to set transparent navigation bar
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarDividerColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.light,
+    ),
+  );
 
   //await _requestPermissions();
   await GetStorage.init();
   diSetup();
-  // initiInternetChecker();
-  // await LocationService.instance.initialize();
   DioSingleton.instance.create();
   runApp(const MyApp());
 }
@@ -68,12 +75,12 @@ class UtillScreenMobile extends StatelessWidget {
             darkTheme: ThemeData.light(),
             theme: ThemeData(
               unselectedWidgetColor: Colors.white,
-              primarySwatch: CustomTheme.kToWhite,
-              primaryColor: AppColors.backgroundColor,
+              primarySwatch: Colors.blue,
+              primaryColor: Color(0xFFFFFFFF),
               useMaterial3: false,
-              scaffoldBackgroundColor: AppColors.backgroundColor,
+              scaffoldBackgroundColor: Color(0xFFFFFFFF),
               appBarTheme: const AppBarTheme(
-                backgroundColor: AppColors.cFFFFFF,
+                backgroundColor: Color(0xFFFFFFFF),
                 elevation: 0,
               ),
             ),

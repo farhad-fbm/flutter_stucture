@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../constants/text_font_style.dart';
-
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/colors.gen.dart';
-import '../../../../../helpers/all_routes.dart';
-import '../../../../../helpers/navigation_service.dart';
-import '../../../../../helpers/ui_helpers.dart';
 import '../../../common_widgets/custom_button.dart';
+import '../../../helpers/all_routes.dart';
+import '../../../helpers/navigation_service.dart';
+import 'widgets/auth_back_button.dart';
+import 'widgets/auth_screen_title.dart';
 
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
@@ -43,8 +40,6 @@ class _OtpScreenState extends State<OtpScreen> {
     super.dispose();
   }
 
-  // String get _code => _controllers.map((c) => c.text).join();
-
   void _onChangedBox(int index, String value) {
     if (value.length == 1 && index < _otpLength - 1) {
       _focusNodes[index + 1].requestFocus();
@@ -56,34 +51,27 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void _submit() {
-    // if (_code.length == _otpLength) {
-    //
-    // e.g. NavigationService.navigateTo(Routes.nextScreen);
-    // } else {
-    //   ScaffoldMessenger.of(context).showSnackBar(
-    //     const SnackBar(content: Text('Please enter the 6-digit code')),
-    //   );
-    // }
-    // NavigationService.navigateTo(Routes.resetPasswordScreen);
+    NavigationService.navigateTo(Routes.resetPasswordScreen);
   }
 
   InputDecoration _otpDecoration(BuildContext context) {
-    final borderRadius = BorderRadius.circular(0.r);
-
-    OutlineInputBorder outline(Color c) => OutlineInputBorder(
-      borderRadius: borderRadius,
-
-      borderSide: BorderSide(color: c, width: 1),
+    OutlineInputBorder focusedOutline() => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: const BorderSide(color: Color(0xFF6A7282), width: 2),
+    );
+    OutlineInputBorder enableOutline() => OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12.r),
+      borderSide: const BorderSide(color: Colors.transparent),
     );
 
     return InputDecoration(
       contentPadding: const EdgeInsets.all(15),
       filled: true,
-      fillColor: AppColors.c5C6068,
+      fillColor: const Color(0xFFF3F7FF),
       hintText: '-',
       counterText: '',
-      enabledBorder: outline(AppColors.c5C6068),
-      focusedBorder: outline(AppColors.c6A7282),
+      enabledBorder: enableOutline(),
+      focusedBorder: focusedOutline(),
       errorBorder: null,
       focusedErrorBorder: null,
     );
@@ -99,7 +87,12 @@ class _OtpScreenState extends State<OtpScreen> {
         focusNode: _focusNodes[index],
         keyboardType: TextInputType.number,
         textAlign: TextAlign.center,
-        style: TextFontStyle.textStyle24c071431Poppins500,
+        style: const TextStyle(
+          fontSize: 24,
+          color: Color(0xFF000000),
+          fontWeight: FontWeight.w500,
+          fontFamily: 'Poppins',
+        ),
         maxLength: 1,
         inputFormatters: [FilteringTextInputFormatter.digitsOnly],
         decoration: _otpDecoration(context),
@@ -117,14 +110,7 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              InkWell(
-                onTap: () => NavigationService.goBack,
-                child: Image.asset(
-                  Assets.icons.arrowBack.path,
-                  height: 17.h,
-                  width: 10.w,
-                ),
-              ),
+              const AuthBackButton(),
               Expanded(
                 child: SingleChildScrollView(
                   padding: EdgeInsets.only(top: 24.h),
@@ -133,17 +119,13 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Verification Code',
-                          style: TextFontStyle.textStyle32c212121Poppins700,
+                        const AuthScreenTitle(
+                          title: 'Verification Code',
+                          subtitle:
+                              'Please confirm the security code received on your registered email.',
                         ),
-                        UIHelper.verticalSpace(16.h),
-                        Text(
-                          'Please confirm the security code received on yur registered email.',
-                          style:
-                              TextFontStyle.textStyle14c0184FFPoppins500,
-                        ),
-                        UIHelper.verticalSpace(24.h),
+
+                        SizedBox(height: 32.h),
 
                         Center(
                           child: Wrap(
@@ -153,13 +135,9 @@ class _OtpScreenState extends State<OtpScreen> {
                           ),
                         ),
 
-                        UIHelper.verticalSpace(24.h),
-                        CustomButton(
-                          text: 'Verify',
-                          onPressed: _submit,
-                          borderRadius: 0.r,
-                        ),
-                        UIHelper.verticalSpace(16.h),
+                        SizedBox(height: 24.h),
+                        CustomButton(text: 'Verify', onPressed: _submit),
+                        SizedBox(height: 16.h),
                         // Re-send
                         Center(
                           child: Column(
@@ -168,24 +146,30 @@ class _OtpScreenState extends State<OtpScreen> {
                                 onPressed: () {},
                                 child: Text(
                                   'Did not receive the code?',
-                                  style:
-                                      TextFontStyle
-                                          .textStyle14c0184FFPoppins500,
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    color: const Color(0xFF7B7B7B),
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Poppins',
+                                  ),
                                 ),
                               ),
                               TextButton(
                                 onPressed: () {},
                                 child: Text(
                                   'Send Again',
-                                  style:
-                                      TextFontStyle
-                                          .textStyle14c0184FFPoppins500,
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    color: const Color(0xFF4B9954),
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Poppins',
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        UIHelper.verticalSpace(40.h),
+                        SizedBox(height: 40.h),
                       ],
                     ),
                   ),

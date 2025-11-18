@@ -587,12 +587,30 @@ class $AssetsImagesGen {
   AssetGenImage get aiProfileTemp =>
       const AssetGenImage('assets/images/ai_profile_temp.png');
 
+  /// File path: assets/images/onboarding1.png
+  AssetGenImage get onboarding1 =>
+      const AssetGenImage('assets/images/onboarding1.png');
+
+  /// File path: assets/images/onboarding2.png
+  AssetGenImage get onboarding2 =>
+      const AssetGenImage('assets/images/onboarding2.png');
+
+  /// File path: assets/images/onboarding3.png
+  AssetGenImage get onboarding3 =>
+      const AssetGenImage('assets/images/onboarding3.png');
+
   /// File path: assets/images/placeholder_image.jpeg
   AssetGenImage get placeholderImage =>
       const AssetGenImage('assets/images/placeholder_image.jpeg');
 
   /// List of all assets
-  List<AssetGenImage> get values => [aiProfileTemp, placeholderImage];
+  List<AssetGenImage> get values => [
+    aiProfileTemp,
+    onboarding1,
+    onboarding2,
+    onboarding3,
+    placeholderImage,
+  ];
 }
 
 class $AssetsLottiesGen {

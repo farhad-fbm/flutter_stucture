@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'common_widgets/custom_onboarding.dart';
+
 import 'constants/app_constants.dart';
+import 'features/onboarding/custom_onboarding.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/post_login.dart';
 import 'networks/dio/dio.dart';
-import 'welcome_screen.dart';
 
 final class Loading extends StatefulWidget {
   const Loading({super.key});
@@ -27,23 +27,19 @@ class _LoadingState extends State<Loading> {
     super.initState();
     _timer = Timer(const Duration(seconds: 35), () {
       if (_isLoading) {
-        // Only log out if internet is connected but loading is taking too long
         _handleLogout();
       }
     });
   }
 
   loadInitialData() async {
-    //AutoAppUpdateUtil.instance.checkAppUpdate();
     await setInitValue();
 
     if (appData.read(kKeyIsLoggedIn)) {
       String token = appData.read(kKeyAccessToken);
       DioSingleton.instance.update(token);
       await performPostLoginActions();
-    } else {
-      //  NotificationService().cancelAllNotifications();
-    }
+    } else {}
     setState(() {
       _timer!.cancel();
       _isLoading = false;
@@ -52,18 +48,14 @@ class _LoadingState extends State<Loading> {
 
   void _handleLogout() {
     appData.write(kKeyIsLoggedIn, false);
-
-   
   }
 
   @override
- 
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const WelcomeScreen();
+      return const OnboardingScreen();
     } else {
       return const OnboardingScreen();
-      
     }
   }
 }

@@ -1,20 +1,10 @@
-// ignore_for_file: prefer_final_fields, unused_field
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../common_widgets/custom_text_field.dart';
-import '../../../../../constants/text_font_style.dart';
-import '../../../../../constants/validator.dart';
-
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/colors.gen.dart';
-
-import '../../../../../helpers/all_routes.dart';
-import '../../../../../helpers/navigation_service.dart';
-import '../../../../../helpers/ui_helpers.dart';
 import '../../../common_widgets/custom_button.dart';
-import '../../../common_widgets/or.dart';
+import '../../../gen/assets.gen.dart';
+import 'widgets/auth_back_button.dart';
+import 'widgets/do_you_have.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -32,7 +22,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
-  bool _checkBox = false;
 
   @override
   void dispose() {
@@ -46,141 +35,123 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgColor,
-
-      appBar: AppBar(
-        backgroundColor: AppColors.bgColor,
-        leading: IconButton(
-          icon: Image.asset(Assets.icons.arrowBack.path, height: 24, width: 24),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        // title: const Text("Sign Up"),
-      ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(Assets.icons.logo.path, height: 100, width: 200),
-            UIHelper.verticalSpace(24.h),
-            Text(
-              'Create your account',
-              style: TextFontStyle.textStyle32c212121Poppins700,
-
-              // textAlign: TextAlign.center,
-            ),
-            UIHelper.verticalSpace(8.h),
-            Text(
-              'Join now to unlock smart key detection and management tools.',
-              style: TextFontStyle.textStyle18c071431Poppins400,
-              textAlign: TextAlign.center,
-            ),
-
-            UIHelper.verticalSpace(48.h),
-
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  UIHelper.verticalSpace(8.h),
-                  CustomTextField(
-                    controller: _nameController,
-                    hintText: 'Your Full Name',
-                    keyboardType: TextInputType.name,
-                    validator: nameValidator,
-                  ),
-
-                  UIHelper.verticalSpace(24.h),
-
-                  CustomTextField(
-                    controller: _emailController,
-                    hintText: 'Your Email Address',
-                    keyboardType: TextInputType.emailAddress,
-                    validator: emailValidator,
-                    toggleVisible: true,
-                  ),
-
-                  UIHelper.verticalSpace(24.h),
-
-                  CustomTextField(
-                    hintText: 'Your password',
-                    controller: _passwordController,
-                    obscureText: !_isPasswordVisible,
-                    validator: passwordValidator,
-                    isPassword: true,
-                    toggleVisible: true,
-                    // prefixIconPath: Assets.icons.passwordicon.path,
-                    suffixIconPath:
-                        _isPasswordVisible
-                            ? Assets.icons.eyeShow.path
-                            : Assets.icons.eyeHide.path,
-                    onSuffixIconPressed: () {
-                      setState(() => _isPasswordVisible = !_isPasswordVisible);
-                    },
-                  ),
-                  UIHelper.verticalSpace(24.h),
-                  CustomTextField(
-                    hintText: 'Confirm Your password',
-                    controller: _confirmPasswordController,
-                    obscureText: !_isPasswordVisible,
-                    validator: passwordValidator,
-                    isPassword: true,
-                    toggleVisible: true,
-                    // prefixIconPath: Assets.icons.passwordicon.path,
-                    suffixIconPath:
-                        _isPasswordVisible
-                            ? Assets.icons.eyeShow.path
-                            : Assets.icons.eyeHide.path,
-                    onSuffixIconPressed: () {
-                      setState(() => _isPasswordVisible = !_isPasswordVisible);
-                    },
-                  ),
-                ],
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const AuthBackButton(),
+              SizedBox(height: 24.h),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        color: const Color(0xFF000000),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Enter Your Personal Information',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: const Color(0xFF000000),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins',
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+              SizedBox(height: 24.h),
 
-            UIHelper.verticalSpace(24.h),
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8.h),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Already have an account? ',
-                  style: TextFontStyle.textStyle18c071431Poppins600,
+                    CustomTextField(
+                      controller: _nameController,
+                      upperTitle: 'UserName',
+                      hintText: 'Your Full Name',
+                      keyboardType: TextInputType.name,
+                      // Add a validator if needed
+                    ),
+
+                    SizedBox(height: 16.h),
+
+                    CustomTextField(
+                      controller: _emailController,
+                      upperTitle: 'Email',
+                      hintText: 'Your Email Address',
+                      keyboardType: TextInputType.emailAddress,
+                      // Add email validation
+                    ),
+
+                    SizedBox(height: 16.h),
+
+                    CustomTextField(
+                      hintText: 'Your password',
+                      upperTitle: 'Password',
+                      controller: _passwordController,
+                      obscureText: !_isPasswordVisible,
+                      isPassword: true,
+                      toggleVisible: true,
+                      suffixIconPath:
+                          _isPasswordVisible
+                              ? Assets.icons.eyeShow.path
+                              : Assets.icons.eyeHide.path,
+                      onSuffixIconPressed: () {
+                        setState(
+                          () => _isPasswordVisible = !_isPasswordVisible,
+                        );
+                      },
+                    ),
+
+                    SizedBox(height: 16.h),
+
+                    CustomTextField(
+                      hintText: 'Confirm Your password',
+                      upperTitle: 'Confirm Password',
+                      controller: _confirmPasswordController,
+                      obscureText: !_isConfirmPasswordVisible,
+                      isPassword: true,
+                      toggleVisible: true,
+                      suffixIconPath:
+                          _isConfirmPasswordVisible
+                              ? Assets.icons.eyeShow.path
+                              : Assets.icons.eyeHide.path,
+                      onSuffixIconPressed: () {
+                        setState(
+                          () =>
+                              _isConfirmPasswordVisible =
+                                  !_isConfirmPasswordVisible,
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                UIHelper.horizontalSpace(8.w),
-                GestureDetector(
-                  onTap: () {
-                    // NavigationService.navigateTo(Routes.signInScreen);
-                  },
-                  child: Text(
-                    'Log In',
-                    style: TextFontStyle.textStyle18c071431Poppins600,
-                  ),
-                ),
-              ],
-            ),
+              ),
 
-            UIHelper.verticalSpace(24.h),
-            CustomButton(
-              text: 'Create Account ',
-              onPressed: () {
-                
-                // NavigationService.navigateTo(Routes.homeScreen);
-              },
-            ),
-            UIHelper.verticalSpace(24.h),
-            OrDivider(color: AppColors.cFFFFFF),
-            UIHelper.verticalSpace(24.h),
-            CustomButton(
-              onPressed: () {},
-              text: 'Continue  with Google',
-              icon: Assets.icons.google.path,
-              bgColor: AppColors.cFFFFFF,
-            ),
-            UIHelper.verticalSpace(40.h),
-          ],
+              SizedBox(height: 16.h),
+
+              CustomButton(onPressed: () {}, text: 'Sign Up'),
+              SizedBox(height: 24.h),
+              const DoYouHave(hasAccount: true),
+
+              SizedBox(height: 40.h),
+            ],
+          ),
         ),
       ),
     );

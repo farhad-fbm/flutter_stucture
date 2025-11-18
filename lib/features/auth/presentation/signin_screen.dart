@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../common_widgets/custom_text_field.dart';
-import '../../../../../constants/text_font_style.dart';
-import '../../../../../constants/validator.dart';
-import '../../../../../gen/assets.gen.dart';
-import '../../../../../gen/colors.gen.dart';
-import '../../../../../helpers/all_routes.dart';
-import '../../../../../helpers/navigation_service.dart';
-import '../../../../../helpers/ui_helpers.dart';
 import '../../../common_widgets/custom_button.dart';
-import '../../../common_widgets/or.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../helpers/all_routes.dart';
+import '../../../helpers/navigation_service.dart';
+import 'widgets/auth_back_button.dart';
+import 'widgets/do_you_have.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -20,144 +17,131 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
   final _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
-  // bool _rememberMe = false;
+  bool isConfirmPasswordVisible = false;
 
   @override
   void dispose() {
+    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _confirmPasswordController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.bgColor,
-
-      appBar: AppBar(
-        backgroundColor: AppColors.bgColor,
-        leading: IconButton(
-          icon: Image.asset(Assets.icons.arrowBack.path, height: 24, width: 24),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        // title: const Text("Sign Up"),
-      ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(Assets.icons.logo.path, height: 100, width: 200),
-            UIHelper.verticalSpace(24.h),
-            Text(
-              'Welcome Back!',
-              style: TextFontStyle.textStyle32c212121Poppins700,
-
-              // textAlign: TextAlign.center,
-            ),
-            UIHelper.verticalSpace(8.h),
-            Text(
-              'Log in to continue detecting and managing \nyour keys',
-              style: TextFontStyle.textStyle18c071431Poppins400,
-              textAlign: TextAlign.center,
-            ),
-
-            UIHelper.verticalSpace(180.h),
-
-            Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextField(
-                    controller: _emailController,
-                    hintText: 'Enter your email',
-                    keyboardType: TextInputType.emailAddress,
-                    validator: emailValidator,
-                  ),
-
-                  UIHelper.verticalSpace(24.h),
-
-                  CustomTextField(
-                    hintText: 'Enter your password',
-                    controller: _passwordController,
-                    obscureText: !_isPasswordVisible,
-                    validator: passwordValidator,
-                    isPassword: true,
-                    toggleVisible: true,
-                    // prefixIconPath: Assets.icons.passwordicon.path,
-                    suffixIconPath:
-                        _isPasswordVisible
-                            ? Assets.icons.eyeShow.path
-                            : Assets.icons.eyeHide.path,
-                    onSuffixIconPressed: () {
-                      setState(() => _isPasswordVisible = !_isPasswordVisible);
-                    },
-                  ),
-
-                  InkWell(
-                    onTap: () {
-                      // NavigationService.navigateTo(Routes.forgetPasswordScreen);
-                    },
-                    child: Align(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        'Forgot Password',
-                        style: TextFontStyle.textStyle14c0184FFPoppins500,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const AuthBackButton(),
+              SizedBox(height: 24.h),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Sign In',
+                      style: TextStyle(
+                        fontSize: 20.sp,
+                        color: const Color(0xFF000000),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Poppins',
                       ),
                     ),
-                  ),
-                  UIHelper.verticalSpace(24.h),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'You don\'t have an account? ',
-                        style:
-                            TextFontStyle.textStyle18c071431Poppins400,
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Sign   in to your account to continue',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: const Color(0xFF000000),
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Poppins',
                       ),
-                      UIHelper.horizontalSpace(8.w),
-                      GestureDetector(
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 24.h),
+
+              Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8.h),
+
+                    CustomTextField(
+                      controller: _emailController,
+                      upperTitle: 'Email',
+                      hintText: 'Your Email Address',
+                      keyboardType: TextInputType.emailAddress,
+                      // Add email validation
+                    ),
+
+                    SizedBox(height: 16.h),
+
+                    CustomTextField(
+                      hintText: 'Your password',
+                      upperTitle: 'Password',
+                      controller: _passwordController,
+                      obscureText: !_isPasswordVisible,
+                      isPassword: true,
+                      toggleVisible: true,
+                      suffixIconPath:
+                          _isPasswordVisible
+                              ? Assets.icons.eyeShow.path
+                              : Assets.icons.eyeHide.path,
+                      onSuffixIconPressed: () {
+                        setState(
+                          () => _isPasswordVisible = !_isPasswordVisible,
+                        );
+                      },
+                    ),
+
+                    SizedBox(height: 4.h),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
                         onTap: () {
-                          // NavigationService.navigateTo(Routes.signInScreen);
+                          NavigationService.navigateTo(
+                            Routes.forgetPasswordScreen,
+                          );
                         },
                         child: Text(
-                          'Sign Up',
-                          style:
-                              TextFontStyle
-                                  .textStyle18c071431Poppins700,
+                          'Forgot Password?',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: const Color(0xff4B9954),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: 'Poppins',
+                          ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
 
-                  UIHelper.verticalSpace(24.h),
-                  CustomButton(
-                    text: 'Log In',
-                    onPressed: () {
-                     
-                      // NavigationService.navigateTo(Routes.homeScreen);
-                    },
-                  ),
-                  UIHelper.verticalSpace(24.h),
-                  OrDivider(color: AppColors.cFFFFFF),
-                  UIHelper.verticalSpace(24.h),
-                  CustomButton(
-                    onPressed: () {},
-                    text: 'Continue with Google',
-                    icon: Assets.icons.google.path,
-                    bgColor: AppColors.cFFFFFF,
-                  ),
-                  UIHelper.verticalSpace(40.h),
-                ],
+                    SizedBox(height: 16.h),
+
+                    CustomButton(onPressed: () {}, text: 'Sign In'),
+                    SizedBox(height: 24.h),
+                    const DoYouHave(hasAccount: false),
+                    SizedBox(height: 40.h),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

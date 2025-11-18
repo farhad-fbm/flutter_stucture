@@ -4,14 +4,14 @@ String? emailValidator(String? value) {
   }
   final emailRegex = RegExp(r'^[^\s@]+@[^\s@]+\.[^\s@]+$');
   if (!emailRegex.hasMatch(value)) {
-    return 'Please enter a valid email address';
+    return 'Please enter your email';
   }
   return null;
 }
 
 String? passwordValidator(String? value) {
   if (value == null || value.isEmpty) {
-    return 'Enter Password';
+    return 'Please enter your password';
   }
   if (value.length < 8) {
     return 'Password must be at least 8 characters';
@@ -47,7 +47,7 @@ String? validatePhoneNumber(String? value) {
 //validation Name
 String? nameValidator(String? value) {
   if (value == null || value.isEmpty) {
-    return 'Name is required';
+    return 'Please enter your full name';
   }
 
   return null;

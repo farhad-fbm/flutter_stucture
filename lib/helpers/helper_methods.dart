@@ -1,34 +1,15 @@
-// ignore_for_file: use_build_context_synchronously, unused_local_variable, avoid_print
-
 import 'dart:async';
 import 'dart:io';
-import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-// import 'package:http/http.dart' as http;
 import '/helpers/di.dart';
 import '../constants/app_constants.dart';
 
-import '../gen/colors.gen.dart';
-
-//final appData = locator.get<GetStorage>();
-// final plcaeMarkAddress = locator.get<PlcaeMarkAddress>();
-//declared for cart scrren calling bottom shit with this from reorder rx
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 final GlobalKey<PopupMenuButtonState<String>> popUpGlobalkey =
     GlobalKey<PopupMenuButtonState<String>>();
-
-// Future<String?> networkImageToBase64(String imageUrl) async {
-//   http.Response response = await http.get(Uri.parse(imageUrl));
-//   final bytes = response.bodyBytes;
-
-//   // ignore: unnecessary_null_comparison
-//   return (bytes != null ? base64Encode(bytes) : null);
-// }
 
 Future<void> setInitValue() async {
   appData.writeIfNull(kKeyfirstTime, true);
@@ -74,58 +55,6 @@ Future<File> getLocalFile(String filename) async {
   return f;
 }
 
-void showMaterialDialog(BuildContext context) {
-  showDialog<bool>(
-    context: context,
-    builder:
-        (context) => AlertDialog(
-          title: const Text(
-            "Do you want to exit the app?",
-            textAlign: TextAlign.center,
-            // style: TextFontStyle.textStylec11c3A1222DMSans400,
-          ),
-          actions: <Widget>[
-            customeButton(
-              name: "No".tr,
-              onCallBack: () {
-                Navigator.of(context).pop(false);
-              },
-              height: 30.sp,
-              minWidth: .3.sw,
-              borderRadius: 30.r,
-              color: const Color(0xffFAEDEC),
-              textStyle: TextStyle(
-                fontSize: 17.sp,
-                color: AppColors.allPrimaryColor,
-                fontWeight: FontWeight.w700,
-              ),
-              context: context,
-            ),
-            customeButton(
-              name: "Yes".tr,
-              onCallBack: () {
-                if (Platform.isAndroid) {
-                  SystemNavigator.pop();
-                } else if (Platform.isIOS) {
-                  exit(0);
-                }
-              },
-              height: 30.sp,
-              minWidth: .3.sw,
-              borderRadius: 30.r,
-              color: AppColors.allPrimaryColor,
-              textStyle: TextStyle(
-                fontSize: 17.sp,
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-              ),
-              context: context,
-            ),
-          ],
-        ),
-  );
-}
-
 void rotation() {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -139,93 +68,48 @@ void rotation() {
     DeviceOrientation.portraitDown,
   ]);
 }
+void showMaterialDialog(BuildContext context) {
+  showDialog<bool>(
+    context: context,
+    builder:
+        (context) => AlertDialog(
+          title: Text(
+            "Do you want to exit the app?",
+            textAlign: TextAlign.center,
+            // style: TextFontStyle.,
+          ),
+          actions: <Widget>[
+            materialButton('NO', () {
+              Navigator.of(context).pop(false);
+            }),
+            SizedBox(width: 20.w),
+            materialButton('YES', () {
+              if (Platform.isAndroid) {
+                SystemNavigator.pop();
+              } else if (Platform.isIOS) {
+                exit(0);
+              }
+            }),
+          ],
+        ),
+  );
+}
 
-Widget customeButton({
-  required String name,
-  required VoidCallback onCallBack,
-  required double height,
-  required double minWidth,
-  required double borderRadius,
-  required Color color,
-  required TextStyle textStyle,
-  required BuildContext context,
-  Color? borderColor,
-}) {
+Widget materialButton(String text, VoidCallback onPressed) {
   return MaterialButton(
-    onPressed: onCallBack,
-    height: height,
-    minWidth: minWidth,
-    shape: RoundedRectangleBorder(
-      side: BorderSide(
-        color: borderColor ?? AppColors.allPrimaryColor,
-        width: 1.5.sp,
-      ),
-      borderRadius: BorderRadius.circular(borderRadius),
-    ),
-    color: color,
+    onPressed: onPressed,
+    height: 30.h,
+    minWidth: .3.sw,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.r)),
+    color: const Color(0xFFA52A2A),
     //splashColor: Colors.white.withOpacity(0.4),
-    child: Text(name, style: textStyle),
+    child: Text(
+      text.tr,
+      style: TextStyle(
+        fontSize: 17.sp,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
   );
-}
-
-int opacityToAlpha(double opacity) {
-  final clampedOpacity = opacity.clamp(0.0, 1.0);
-  return (clampedOpacity * 255).round();
-}
-
-Future<XFile?> picImage() async {
-  try {
-    final ImagePicker picker = ImagePicker();
-
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      return image;
-    } else {
-      return null;
-    }
-  } catch (e) {
-    return null;
-  }
-}
-
-Future<List<XFile>?> pickMultipleImages() async {
-  try {
-    final ImagePicker picker = ImagePicker();
-
-    final List<XFile> images = await picker.pickMultiImage();
-
-    if (images.isNotEmpty) {
-      return images;
-    } else {
-      return null;
-    }
-  } catch (e) {
-    return null;
-  }
-}
-
-// Future<void> textToSpeech(String text) async {
-//   try {
-//     FlutterTts flutterTts = FlutterTts();
-//     List<dynamic> voices = await flutterTts.getVoices;
-//     await flutterTts.setVolume(1);
-//     await flutterTts.speak(text);
-//   } catch (e) {
-//     null;
-//   }
-// }
-Future<dio.MultipartFile?> convertToMultipartFile(XFile? file) async {
-  if (file == null) return null;
-
-  return await dio.MultipartFile.fromFile(
-    file.path,
-    filename: file.name,
-  );
-}
-
-String formatDate(DateTime date) {
-  String day = date.day.toString().padLeft(2, '0');
-  String month = date.month.toString().padLeft(2, '0');
-  String year = date.year.toString();
-  return '$day/$month/$year';
 }

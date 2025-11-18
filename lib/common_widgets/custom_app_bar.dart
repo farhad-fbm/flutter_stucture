@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../constants/text_font_style.dart';
 import '../gen/assets.gen.dart';
 import '../gen/colors.gen.dart';
 import '../helpers/navigation_service.dart';
@@ -41,7 +40,11 @@ class TopRow extends StatelessWidget {
             ),
             Text(
               title.toUpperCase(),
-              style: TextFontStyle.textStyle24c071431Poppins500,
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: const Color(0xFF071431),
+                fontWeight: FontWeight.w600,
+              ),
             ),
             hasNotification
                 ? InkWell(

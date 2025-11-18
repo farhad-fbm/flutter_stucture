@@ -1,12 +1,14 @@
-// ignore_for_file: deprecated_member_use
-
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:io' show Platform;
 
-urlLunch(String url) {
+Future<void> urlLunch(String url) async {
+  final uri = Uri.parse(url);
+
   if (Platform.isIOS) {
-    launch(url, forceSafariVC: false);
+    // Same as: forceSafariVC: false
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   } else {
-    launch(url, forceWebView: false);
+    // Same as: forceWebView: false
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
   }
 }

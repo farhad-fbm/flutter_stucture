@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../constants/text_font_style.dart';
-import '../gen/colors.gen.dart';
-import '../helpers/ui_helpers.dart';
-
 class CustomButton extends StatelessWidget {
   final String? icon;
   final String text;
@@ -21,10 +17,10 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.border,
-    this.borderRadius = 12,
+    this.borderRadius = 100,
     this.width = double.infinity,
-    this.bgColor = AppColors.allPrimaryColor,
-    this.foregroundColor,
+    this.bgColor = const Color(0xFF4B9954),
+    this.foregroundColor = const Color(0xFFFFFFFF),
   });
 
   @override
@@ -34,14 +30,15 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: bgColor ?? Colors.blue,
-          foregroundColor: foregroundColor ?? AppColors.cFFFFFF,
+          backgroundColor: bgColor ?? const Color(0xFF4B9954),
+          foregroundColor: foregroundColor ?? const Color(0xFFFFFFFF),
           padding: EdgeInsets.symmetric(vertical: 18.h, horizontal: 16.w),
           elevation: 0,
-          side:
-              AppColors.cFFFFFF == bgColor
-                  ? BorderSide.none
-                  : border ?? BorderSide(color: AppColors.c000000, width: 1.w),
+          // side:
+          //     const Color(0xFFFFFFFF) == bgColor
+          //         ? BorderSide.none
+          //         : border ??
+          //             BorderSide(color: const Color(0xFF000000), width: 1.w),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius.r),
           ),
@@ -53,20 +50,17 @@ class CustomButton extends StatelessWidget {
                   : MainAxisAlignment.center,
 
           children: [
-            if (icon != null)
-              Image.asset(
-                icon!,
-                height: 24.h,
-                width: 24.w,
-                // color: foregroundColor ?? Colors.white,
-              ),
+            if (icon != null) Image.asset(icon!, height: 24.h, width: 24.w),
             Text(
               text,
-              style: TextFontStyle.textStyle16c0184FFPoppins400
-                  .copyWith(color: foregroundColor ?? AppColors.c000000),
+              style: TextStyle(
+                fontSize: 16,
+                color: foregroundColor ?? const Color(0xFF000000),
+                fontWeight: FontWeight.w700,
+                fontFamily: 'Poppins',
+              ),
             ),
-            if (icon != null) UIHelper.horizontalSpace(24.w),
-            // keeps text centered visually
+            if (icon != null) SizedBox(width: 24.w),
           ],
         ),
       ),

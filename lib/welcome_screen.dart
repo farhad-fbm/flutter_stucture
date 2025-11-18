@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'gen/assets.gen.dart';
 
 final class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -16,11 +15,12 @@ final class WelcomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 40.h),
-              Image.asset(
-                Assets.icons.appIcon.path,
-                height: 100.h,
-                width: 256.56.w,
-              ),
+              // Image.asset(
+              //   Assets.icons.appIcon.path,
+              //   height: 100.h,
+              //   width: 256.56.w,
+              // ),
+              const Icon(Icons.flutter_dash),
               SizedBox(height: 10.h),
             ],
           ),
