@@ -14,6 +14,7 @@ class HelpSupportScreeen extends StatefulWidget {
 }
 
 class _HelpSupportScreeenState extends State<HelpSupportScreeen> {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
@@ -24,46 +25,58 @@ class _HelpSupportScreeenState extends State<HelpSupportScreeen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AuthAppBar(title: "Help and Supports"),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AuthAppBar(title: "Help and Supports"),
 
-              SizedBox(height: 24.h),
-              CustomTextField(
-                upperTitle: "Full Name",
-                controller: nameController,
-                hintText: 'Full Name',
-                prefixIconPath: Assets.icons.profile.path,
-              ),
+                SizedBox(height: 24.h),
+                CustomTextField(
+                  upperTitle: "Full Name",
+                  controller: nameController,
+                  hintText: 'Full Name',
+                  prefixIconPath: Assets.icons.profile.path,
+                ),
 
-              UIHelper.verticalSpace(16.h),
-              CustomTextField(
-                upperTitle: "Email Address",
-                controller: emailController,
-                hintText: 'Email',
-                prefixIconPath: Assets.icons.email.path,
-              ),
-              SizedBox(height: 16.h),
-              CustomTextField(
-                upperTitle: "Subject",
-                controller: subjectController,
-                hintText: 'Subject Here',
-                prefixIconPath: Assets.icons.profile.path,
-              ),
+                UIHelper.verticalSpace(16.h),
+                CustomTextField(
+                  upperTitle: "Email Address",
+                  controller: emailController,
+                  hintText: 'Email',
+                  prefixIconPath: Assets.icons.email.path,
+                ),
+                SizedBox(height: 16.h),
+                CustomTextField(
+                  upperTitle: "Subject",
+                  controller: subjectController,
+                  hintText: 'Subject Here',
+                  prefixIconPath: Assets.icons.profile.path,
+                ),
 
-              SizedBox(height: 16.h),
+                SizedBox(height: 16.h),
 
-              CustomTextField(
-                upperTitle: "Issue",
-                controller: issueController,
-                hintText: 'Describe your issue here',
-                maxLines: 10,
-              ),
-              Spacer(),
-              CustomButton(text: 'Send', onPressed: () {}),
-              SizedBox(height: 24.h),
-            ],
+                CustomTextField(
+                  upperTitle: "Issue",
+                  controller: issueController,
+                  hintText: 'Describe your issue here',
+                  maxLines: 10,
+                ),
+                Spacer(),
+                CustomButton(
+                  text: 'Send',
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      //  Form is valid, submit data
+                    } else {
+                      // Form is invalid, show errors
+                    }
+                  },
+                ),
+                SizedBox(height: 24.h),
+              ],
+            ),
           ),
         ),
       ),

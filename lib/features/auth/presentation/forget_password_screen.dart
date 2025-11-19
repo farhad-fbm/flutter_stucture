@@ -15,6 +15,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
 
   @override
@@ -30,28 +31,31 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       backgroundColor: const Color(0xFFFFFFFF),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 32.h),
-            const AuthBackButton(),
-            SizedBox(height: 24.h),
-
-            CustomTextField(
-              upperTitle: 'Enter E-mail Address',
-              hintText: 'Enter Your Email',
-              controller: emailController,
-              keyboardType: TextInputType.emailAddress,
-              // validator: emailValidator,
-            ),
-            SizedBox(height: 8.h),
-            CustomButton(
-              text: 'Continue',
-              onPressed: () {
-                NavigationService.navigateTo(Routes.otpScreen);
-              },
-            ),
-          ],
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 32.h),
+              const AuthBackButton(),
+              SizedBox(height: 24.h),
+          
+              CustomTextField(
+                upperTitle: 'Enter E-mail Address',
+                hintText: 'Enter Your Email',
+                controller: emailController,
+                keyboardType: TextInputType.emailAddress,
+                // validator: emailValidator,
+              ),
+              SizedBox(height: 8.h),
+              CustomButton(
+                text: 'Continue',
+                onPressed: () {
+                  NavigationService.navigateTo(Routes.otpScreen);
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

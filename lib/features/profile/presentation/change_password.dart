@@ -16,6 +16,7 @@ class ChangePasswordScreen extends StatefulWidget {
 }
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  final _formKey = GlobalKey<FormState>();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
@@ -29,70 +30,73 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AuthAppBar(title: "Change Password"),
-              UIHelper.verticalSpace(56.h),
-
-              CustomTextField(
-                hintText: 'Enter Current password',
-                controller: passwordController,
-                obscureText: !_isPasswordVisible,
-                validator: passwordValidator,
-                isPassword: true,
-                toggleVisible: true,
-                suffixIconPath:
-                    _isPasswordVisible
-                        ? Assets.icons.eyeShow.path
-                        : Assets.icons.eyeHide.path,
-                onSuffixIconPressed: () {
-                  setState(() => _isPasswordVisible = !_isPasswordVisible);
-                },
-              ),
-              UIHelper.verticalSpace(24.h),
-              CustomTextField(
-                hintText: "Enter New Password",
-                controller: newPasswordController,
-                isPassword: true,
-                toggleVisible: true,
-                obscureText: !_isNewPasswordVisible,
-                validator: passwordValidator,
-                suffixIconPath:
-                    _isNewPasswordVisible
-                        ? Assets.icons.eyeShow.path
-                        : Assets.icons.eyeHide.path,
-                onSuffixIconPressed: () {
-                  setState(
-                    () => _isNewPasswordVisible = !_isNewPasswordVisible,
-                  );
-                },
-              ),
-
-              UIHelper.verticalSpace(24.h),
-
-              UIHelper.verticalSpace(8.h),
-              CustomTextField(
-                hintText: "Confirm New Password",
-                isPassword: true,
-                controller: confirmPasswordController,
-                toggleVisible: true,
-                obscureText: !_isConfirmPasswordVisible,
-                suffixIconPath:
-                    _isConfirmPasswordVisible
-                        ? Assets.icons.eyeShow.path
-                        : Assets.icons.eyeHide.path,
-                onSuffixIconPressed: () {
-                  setState(
-                    () =>
-                        _isConfirmPasswordVisible = !_isConfirmPasswordVisible,
-                  );
-                },
-              ),
-              Spacer(),
-              CustomButton(text: 'Update Password', onPressed: () {}),
-              UIHelper.verticalSpace(20.h),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AuthAppBar(title: "Change Password"),
+                UIHelper.verticalSpace(56.h),
+            
+                CustomTextField(
+                  hintText: 'Enter Current password',
+                  controller: passwordController,
+                  obscureText: !_isPasswordVisible,
+                  validator: passwordValidator,
+                  isPassword: true,
+                  toggleVisible: true,
+                  suffixIconPath:
+                      _isPasswordVisible
+                          ? Assets.icons.eyeShow.path
+                          : Assets.icons.eyeHide.path,
+                  onSuffixIconPressed: () {
+                    setState(() => _isPasswordVisible = !_isPasswordVisible);
+                  },
+                ),
+                UIHelper.verticalSpace(24.h),
+                CustomTextField(
+                  hintText: "Enter New Password",
+                  controller: newPasswordController,
+                  isPassword: true,
+                  toggleVisible: true,
+                  obscureText: !_isNewPasswordVisible,
+                  validator: passwordValidator,
+                  suffixIconPath:
+                      _isNewPasswordVisible
+                          ? Assets.icons.eyeShow.path
+                          : Assets.icons.eyeHide.path,
+                  onSuffixIconPressed: () {
+                    setState(
+                      () => _isNewPasswordVisible = !_isNewPasswordVisible,
+                    );
+                  },
+                ),
+            
+                UIHelper.verticalSpace(24.h),
+            
+                UIHelper.verticalSpace(8.h),
+                CustomTextField(
+                  hintText: "Confirm New Password",
+                  isPassword: true,
+                  controller: confirmPasswordController,
+                  toggleVisible: true,
+                  obscureText: !_isConfirmPasswordVisible,
+                  suffixIconPath:
+                      _isConfirmPasswordVisible
+                          ? Assets.icons.eyeShow.path
+                          : Assets.icons.eyeHide.path,
+                  onSuffixIconPressed: () {
+                    setState(
+                      () =>
+                          _isConfirmPasswordVisible = !_isConfirmPasswordVisible,
+                    );
+                  },
+                ),
+                Spacer(),
+                CustomButton(text: 'Update Password', onPressed: () {}),
+                UIHelper.verticalSpace(20.h),
+              ],
+            ),
           ),
         ),
       ),

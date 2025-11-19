@@ -19,6 +19,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
 
@@ -109,58 +110,61 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Column(
-            children: [
-              AuthAppBar(title: "Edit Profile"),
-
-              UIHelper.verticalSpace(24.h),
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 75,
-                    backgroundImage:
-                        image != null
-                            ? FileImage(image!)
-                            : AssetImage(Assets.icons.avater.path)
-                                as ImageProvider,
-                  ),
-
-                  Positioned(
-                    bottom: 4.h,
-                    right: 8.w,
-                    child: GestureDetector(
-                      onTap: showImagePickerOptions,
-                      child: Image.asset(
-                        Assets.icons.camera.path,
-                        height: 24.h,
-                        width: 24.w,
-                        color: Color(0xFF96DD00),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                AuthAppBar(title: "Edit Profile"),
+            
+                UIHelper.verticalSpace(24.h),
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 75,
+                      backgroundImage:
+                          image != null
+                              ? FileImage(image!)
+                              : AssetImage(Assets.icons.avater.path)
+                                  as ImageProvider,
+                    ),
+            
+                    Positioned(
+                      bottom: 4.h,
+                      right: 8.w,
+                      child: GestureDetector(
+                        onTap: showImagePickerOptions,
+                        child: Image.asset(
+                          Assets.icons.camera.path,
+                          height: 24.h,
+                          width: 24.w,
+                          color: Color(0xFF96DD00),
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              UIHelper.verticalSpace(32.h),
-              // ___________________________________
-              CustomTextField(
-                upperTitle: "Full Name",
-                controller: nameController,
-                hintText: 'Full Name',
-                prefixIconPath: Assets.icons.profile.path,
-              ),
-
-              UIHelper.verticalSpace(16.h),
-              CustomTextField(
-                upperTitle: "Email Address",
-                controller: emailController,
-                hintText: 'Email',
-                prefixIconPath: Assets.icons.email.path,
-              ),
-
-              Spacer(),
-              CustomButton(text: 'Update Information', onPressed: () {}),
-              UIHelper.verticalSpace(20.h),
-            ],
+                  ],
+                ),
+                UIHelper.verticalSpace(32.h),
+                // ___________________________________
+                CustomTextField(
+                  upperTitle: "Full Name",
+                  controller: nameController,
+                  hintText: 'Full Name',
+                  prefixIconPath: Assets.icons.profile.path,
+                ),
+            
+                UIHelper.verticalSpace(16.h),
+                CustomTextField(
+                  upperTitle: "Email Address",
+                  controller: emailController,
+                  hintText: 'Email',
+                  prefixIconPath: Assets.icons.email.path,
+                ),
+            
+                Spacer(),
+                CustomButton(text: 'Update Information', onPressed: () {}),
+                UIHelper.verticalSpace(20.h),
+              ],
+            ),
           ),
         ),
       ),
