@@ -11,19 +11,24 @@ Widget loadingIndicatorCircle({
   double? size,
 }) {
   double loaderSize = 200.sp;
-  return DotLottieLoader.fromAsset(Assets.lotties.waiting,
-      frameBuilder: (BuildContext ctx, DotLottie? dotlottie) {
-    if (dotlottie != null) {
-      return Center(
-        child: Container(
-          child: Lottie.memory(dotlottie.animations.values.single,
-              height: loaderSize, width: loaderSize),
-        ),
-      );
-    } else {
-      return Container();
-    }
-  });
+  return DotLottieLoader.fromAsset(
+    Assets.lottie.waiting,
+    frameBuilder: (BuildContext ctx, DotLottie? dotlottie) {
+      if (dotlottie != null) {
+        return Center(
+          child: Container(
+            child: Lottie.memory(
+              dotlottie.animations.values.single,
+              height: loaderSize,
+              width: loaderSize,
+            ),
+          ),
+        );
+      } else {
+        return Container();
+      }
+    },
+  );
 }
 
 Widget shimmer({
@@ -34,8 +39,11 @@ Widget shimmer({
 }) {
   return Center(
     child: Container(
-      child: Lottie.asset(name ?? Assets.lotties.hamburger,
-          width: size, height: size),
+      child: Lottie.asset(
+        name ?? Assets.lottie.hamburger,
+        width: size,
+        height: size,
+      ),
     ),
   );
 }

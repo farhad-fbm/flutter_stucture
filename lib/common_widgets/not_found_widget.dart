@@ -15,7 +15,7 @@ class NotFoundWidget extends StatelessWidget {
     return Center(
         child: shimmer(
             context: NavigationService.context,
-            name: Assets.lotties.notFound,
+            name: Assets.lottie.notFound,
             size: 220.sp));
   }
 }

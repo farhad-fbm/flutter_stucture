@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'constants/app_constants.dart';
-import 'features/onboarding/custom_onboarding.dart';
+import 'features/auth/onboarding/custom_onboarding.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/post_login.dart';

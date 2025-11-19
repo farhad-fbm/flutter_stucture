@@ -8,7 +8,7 @@ import '../features/auth/presentation/otp_screen.dart';
 import '../features/auth/presentation/reset_password_screen.dart';
 import '../features/auth/presentation/signin_screen.dart';
 import '../features/auth/presentation/signup_screen.dart';
-import '../features/onboarding/custom_onboarding.dart';
+import '../features/auth/onboarding/custom_onboarding.dart';
 
 final class Routes {
   static final Routes _routes = Routes._internal();

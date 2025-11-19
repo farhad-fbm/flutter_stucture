@@ -11,12 +11,15 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: Gilroy
-  static const String gilroy = 'Gilroy';
+  /// Font family: DMSans_Bold
+  static const String dMSansBold = 'DMSans_Bold';
 
-  /// Font family: Poppins
-  static const String poppins = 'Poppins';
+  /// Font family: DMSans_Medium
+  static const String dMSansMedium = 'DMSans_Medium';
 
-  /// Font family: Urbanist
-  static const String urbanist = 'Urbanist';
+  /// Font family: DMSans_Regular
+  static const String dMSansRegular = 'DMSans_Regular';
+
+  /// Font family: DMSans_SemiBold
+  static const String dMSansSemiBold = 'DMSans_SemiBold';
 }

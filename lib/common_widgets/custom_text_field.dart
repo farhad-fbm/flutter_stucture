@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-enum FieldType { email, password, confirmPassword }
+enum FieldType { name, email, password, confirmPassword }
 
 class CustomTextField extends StatelessWidget {
   final String? upperTitle;
@@ -108,7 +108,7 @@ class CustomTextField extends StatelessWidget {
               hintText: hintText,
               hintStyle: const TextStyle(
                 fontSize: 14,
-                color: Color(0xFF000000),
+                color: Color(0xFF9E9E9E),
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Nunito',
               ),

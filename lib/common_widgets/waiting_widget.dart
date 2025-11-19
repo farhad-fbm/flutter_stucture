@@ -6,16 +6,16 @@ import '../helpers/navigation_service.dart';
 import 'custom_circle_loader.dart';
 
 class WaitingWidget extends StatelessWidget {
-  const WaitingWidget({
-    super.key,
-  });
+  const WaitingWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: shimmer(
-            context: NavigationService.context,
-            name: Assets.lotties.waiting,
-            size: 220.sp));
+      child: shimmer(
+        context: NavigationService.context,
+        name: Assets.lottie.waiting,
+        size: 220.sp,
+      ),
+    );
   }
 }
