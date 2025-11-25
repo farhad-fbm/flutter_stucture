@@ -31,61 +31,48 @@ final class RouteGenerator {
 
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      //    case Routes.foodDetailsScreen:
+      //     final args = (settings.arguments as Map?) ?? {};
+      //     Widget screen = FoodDetailsScreen(foodData: args['foodData']);
+      //     return Platform.isAndroid
+      //         ? _FadedTransitionRoute(widget: screen, settings: settings)
+      //         : CupertinoPageRoute(builder: (context) => screen);
+
       case Routes.authHome:
+        Widget screen = const AuthHome();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const AuthHome(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(builder: (context) => const AuthHome());
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.signInScreen:
+        Widget screen = const SignInScreen();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const SignInScreen(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(builder: (context) => const SignInScreen());
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.signUpScreen:
+        Widget screen = const SignUpScreen();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const SignUpScreen(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(builder: (context) => const SignUpScreen());
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.forgetPasswordScreen:
+        Widget screen = const ForgetPasswordScreen();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const ForgetPasswordScreen(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(
-              builder: (context) => const ForgetPasswordScreen(),
-            );
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.otpScreen:
+        Widget screen = const OtpScreen();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const OtpScreen(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(builder: (context) => const OtpScreen());
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.resetPasswordScreen:
+        Widget screen = const ResetPasswordScreen();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const ResetPasswordScreen(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(
-              builder: (context) => const ResetPasswordScreen(),
-            );
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.onboardingScreen:
+        Widget screen = const OnboardingScreen();
         return Platform.isAndroid
-            ? _FadedTransitionRoute(
-              widget: const OnboardingScreen(),
-              settings: settings,
-            )
-            : CupertinoPageRoute(
-              builder: (context) => const OnboardingScreen(),
-            );
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
 
       default:
         return null;

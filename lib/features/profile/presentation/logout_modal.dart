@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../../gen/colors.gen.dart';
-import '../../../../../helpers/all_routes.dart';
-import '../../../../../helpers/navigation_service.dart';
 import '../../../../../helpers/ui_helpers.dart';
 import '../../../../common_widgets/custom_button.dart';
+import '../../../helpers/all_routes.dart';
+import '../../../helpers/navigation_service.dart';
 
 void logoutModal(BuildContext context) {
   showDialog(
@@ -17,7 +16,7 @@ void logoutModal(BuildContext context) {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
           decoration: BoxDecoration(
-            color: AppColors.bgColor,
+            color: Color(0xFFFFFFFF),
             borderRadius: BorderRadius.circular(16.r),
           ),
           child: Column(
@@ -27,16 +26,16 @@ void logoutModal(BuildContext context) {
               UIHelper.verticalSpace(16.h),
 
               // Text content
-              const Text(
+              Text(
                 "Are you sure to Log Out?",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black,
                 ),
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20.h),
 
               // Buttons row
               Column(
@@ -47,6 +46,8 @@ void logoutModal(BuildContext context) {
                     width: 200.w,
                     borderRadius: 16.r,
                     onPressed: () => Navigator.pop(context),
+                    bgColor: Color(0xFFEEF5EE),
+                    foregroundColor: Color(0xFF4B9954),
                   ),
 
                   UIHelper.verticalSpace(12.h),
@@ -55,13 +56,13 @@ void logoutModal(BuildContext context) {
                     width: 200.w,
                     borderRadius: 16.r,
                     onPressed: () {
-                      // NavigationService.navigateToReplacement(
-                      //   Routes.profileHomeScreen,
-                      // );
+                      NavigationService.navigateToReplacement(
+                        Routes.signInScreen,
+                      );
                     },
-                    bgColor: Color(0xFF333842),
+                    bgColor: Color(0xFFFDF2F2),
                     foregroundColor: Colors.red,
-                    border: BorderSide(color: Colors.red, width: 2.w),
+                    border: BorderSide(color: Colors.red, width: 1.w),
                   ),
                 ],
               ),

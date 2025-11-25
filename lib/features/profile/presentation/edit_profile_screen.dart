@@ -1,15 +1,14 @@
 import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../../../common_widgets/custom_text_field.dart';
-import '../../../../gen/assets.gen.dart';
-import '../../../../helpers/navigation_service.dart';
-import '../../../../helpers/ui_helpers.dart';
-import '../../../common_widgets/auth_app_bar.dart';
+import '../../../common_widgets/custom_app_bar.dart';
 import '../../../common_widgets/custom_button.dart';
+import '../../../common_widgets/custom_text_field.dart';
+import '../../../gen/assets.gen.dart';
+import '../../../helpers/navigation_service.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -22,6 +21,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final nameController = TextEditingController();
   final emailController = TextEditingController();
+  final phoneController = TextEditingController();
 
   File? image;
   final ImagePicker picker = ImagePicker();
@@ -47,17 +47,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                UIHelper.verticalSpace(8.h),
+                SizedBox(height: 12.h),
                 Text(
-                  "Set new picture",
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  "Set New Picture",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                 ),
-                UIHelper.verticalSpace(8.h),
+                SizedBox(height: 12.h),
                 const Divider(color: Colors.black26),
-                UIHelper.verticalSpace(16.h),
+                SizedBox(height: 16.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -68,7 +65,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 80.h,
                           width: 80.w,
                           child: IconButton(
-                            icon: Assets.icons.logo.image(fit: BoxFit.cover),
+                            icon: Icon(Icons.photo_camera, size: 40.h),
                             onPressed: () {
                               NavigationService.goBack;
                               pickImage(ImageSource.camera);
@@ -85,7 +82,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           height: 80.h,
                           width: 80.w,
                           child: IconButton(
-                            icon: Assets.icons.avater.image(fit: BoxFit.cover),
+                            icon: Icon(Icons.photo_library, size: 40.h),
                             onPressed: () {
                               NavigationService.goBack;
                               pickImage(ImageSource.gallery);
@@ -97,7 +94,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),
                   ],
                 ),
-                UIHelper.verticalSpace(32.h),
+                SizedBox(height: 32.h),
               ],
             ),
           ),
@@ -107,16 +104,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: Form(
+      body: Column(
+        children: [
+          CustomAppBar(title: "Edit"),
+          SizedBox(height: 16.h),
+          Form(
             key: _formKey,
             child: Column(
               children: [
-                AuthAppBar(title: "Edit Profile"),
-            
-                UIHelper.verticalSpace(24.h),
+                SizedBox(height: 16.h),
                 Stack(
                   children: [
                     CircleAvatar(
@@ -127,46 +123,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               : AssetImage(Assets.icons.avater.path)
                                   as ImageProvider,
                     ),
-            
+
                     Positioned(
                       bottom: 4.h,
                       right: 8.w,
                       child: GestureDetector(
                         onTap: showImagePickerOptions,
-                        child: Image.asset(
-                          Assets.icons.camera.path,
-                          height: 24.h,
-                          width: 24.w,
-                          color: Color(0xFF96DD00),
+                        child: Icon(
+                          Icons.add_a_photo,
+                          size: 28.h,
+                          color: Color(0xFF898989),
                         ),
                       ),
                     ),
                   ],
                 ),
-                UIHelper.verticalSpace(32.h),
-                // ___________________________________
-                CustomTextField(
-                  upperTitle: "Full Name",
-                  controller: nameController,
-                  hintText: 'Full Name',
-                  prefixIconPath: Assets.icons.profile.path,
+                SizedBox(height: 16.h),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFFFFFF),
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Column(
+                    children: [
+                      // ___________________________________
+                      CustomTextField(
+                        upperTitle: "Full Name",
+                        controller: nameController,
+                        hintText: 'Full Name',
+                        // prefixIconPath: Assets.icons.profile.path,
+                      ),
+
+                      SizedBox(height: 16.h),
+                      CustomTextField(
+                        upperTitle: "Email Address",
+                        controller: emailController,
+                        hintText: 'Email',
+                        // prefixIconPath: Assets.icons..path,
+                      ),
+                      SizedBox(height: 16.h),
+                      CustomTextField(
+                        upperTitle: "Number",
+                        controller: phoneController,
+                        hintText: 'Phone Number',
+                        // prefixIconPath: Assets.icons..path,
+                      ),
+
+                      // Spacer(),
+                    ],
+                  ),
                 ),
-            
-                UIHelper.verticalSpace(16.h),
-                CustomTextField(
-                  upperTitle: "Email Address",
-                  controller: emailController,
-                  hintText: 'Email',
-                  prefixIconPath: Assets.icons.email.path,
-                ),
-            
-                Spacer(),
-                CustomButton(text: 'Update Information', onPressed: () {}),
-                UIHelper.verticalSpace(20.h),
+                SizedBox(height: 32.h),
+                CustomButton(text: 'Save', onPressed: () {}),
               ],
             ),
           ),
-        ),
+        ],
       ),
     );
   }

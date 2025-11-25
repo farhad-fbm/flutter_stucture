@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,20 +12,11 @@ import 'networks/dio/dio.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // ----------to remove black bars on older android
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  // ----------to set transparent navigation bar
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-      systemNavigationBarDividerColor: Colors.transparent,
-      systemNavigationBarIconBrightness: Brightness.light,
-    ),
-  );
 
   //await _requestPermissions();
   await GetStorage.init();
   diSetup();
+  // initiInternetChecker();
   DioSingleton.instance.create();
   runApp(const MyApp());
 }
@@ -40,16 +30,10 @@ class MyApp extends StatelessWidget {
     setInitValue();
     return AnimateIfVisibleWrapper(
       showItemInterval: const Duration(milliseconds: 150),
-      child: PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (bool didPop, _) async {
-          showMaterialDialog(context);
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return const UtillScreenMobile();
         },
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return const UtillScreenMobile();
-          },
-        ),
       ),
     );
   }
@@ -65,33 +49,27 @@ class UtillScreenMobile extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (bool didPop, _) async {
-            showMaterialDialog(context);
-          },
-          child: GetMaterialApp(
-            initialRoute: '/',
-            darkTheme: ThemeData.light(),
-            theme: ThemeData(
-              unselectedWidgetColor: Colors.white,
-              primarySwatch: Colors.blue,
-              primaryColor: Color(0xFFFFFFFF),
-              useMaterial3: false,
-              scaffoldBackgroundColor: Color(0xFFFFFFFF),
-              appBarTheme: const AppBarTheme(
-                backgroundColor: Color(0xFFFFFFFF),
-                elevation: 0,
-              ),
+        return GetMaterialApp(
+          initialRoute: '/',
+          darkTheme: ThemeData.light(),
+          debugShowCheckedModeBanner: false,
+          navigatorKey: NavigationService.navigatorKey,
+          onGenerateRoute: RouteGenerator.generateRoute,
+          theme: ThemeData(
+            unselectedWidgetColor: Colors.white,
+            primarySwatch: Colors.blue,
+            primaryColor: const Color(0xFFFFFFFF),
+            useMaterial3: false,
+            scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color(0xFFFFFFFF),
+              elevation: 0,
             ),
-            debugShowCheckedModeBanner: false,
-            builder: (context, widget) {
-              return MediaQuery(data: MediaQuery.of(context), child: widget!);
-            },
-            navigatorKey: NavigationService.navigatorKey,
-            onGenerateRoute: RouteGenerator.generateRoute,
-            home: const Loading(),
           ),
+          builder: (context, widget) {
+            return MediaQuery(data: MediaQuery.of(context), child: widget!);
+          },
+          home: const Loading(),
         );
       },
     );

@@ -1,15 +1,26 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import '/helpers/di.dart';
 import '../constants/app_constants.dart';
 
 final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 final GlobalKey<PopupMenuButtonState<String>> popUpGlobalkey =
     GlobalKey<PopupMenuButtonState<String>>();
+
+void rotation() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Color.fromARGB(80, 0, 0, 0),
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+}
 
 Future<void> setInitValue() async {
   appData.writeIfNull(kKeyfirstTime, true);
@@ -33,6 +44,37 @@ Future<void> setInitValue() async {
   await Future.delayed(const Duration(seconds: 2));
 }
 
+Future<bool?> showExitDialog(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    builder:
+        (context) => AlertDialog(
+          title: const Text(
+            "Do you want to exit?",
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('NO'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('YES'),
+            ),
+          ],
+        ),
+  );
+}
+
+
+
+// Future<File> getLocalFile(String filename) async {
+//   File f = File(filename);
+//   return f;
+// }
+
+
 // Future<void> initiInternetChecker() async {
 //   InternetConnectionChecker.createInstance(
 //           checkTimeout: const Duration(seconds: 1),
@@ -49,67 +91,3 @@ Future<void> setInitValue() async {
 //     }
 //   });
 // }
-
-Future<File> getLocalFile(String filename) async {
-  File f = File(filename);
-  return f;
-}
-
-void rotation() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Color.fromARGB(80, 0, 0, 0),
-      statusBarIconBrightness: Brightness.light,
-    ),
-  );
-
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-}
-void showMaterialDialog(BuildContext context) {
-  showDialog<bool>(
-    context: context,
-    builder:
-        (context) => AlertDialog(
-          title: Text(
-            "Do you want to exit the app?",
-            textAlign: TextAlign.center,
-            // style: TextFontStyle.,
-          ),
-          actions: <Widget>[
-            materialButton('NO', () {
-              Navigator.of(context).pop(false);
-            }),
-            SizedBox(width: 20.w),
-            materialButton('YES', () {
-              if (Platform.isAndroid) {
-                SystemNavigator.pop();
-              } else if (Platform.isIOS) {
-                exit(0);
-              }
-            }),
-          ],
-        ),
-  );
-}
-
-Widget materialButton(String text, VoidCallback onPressed) {
-  return MaterialButton(
-    onPressed: onPressed,
-    height: 30.h,
-    minWidth: .3.sw,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.r)),
-    color: const Color(0xFFA52A2A),
-    //splashColor: Colors.white.withOpacity(0.4),
-    child: Text(
-      text.tr,
-      style: TextStyle(
-        fontSize: 17.sp,
-        color: Colors.white,
-        fontWeight: FontWeight.w700,
-      ),
-    ),
-  );
-}
