@@ -3,19 +3,14 @@
 final class ResponseMessage {
   ResponseMessage._();
   // API response messages
-  static const String SUCCESS = "Success"; // Success with data
-  static const String NO_CONTENT =
-      "Success with no content"; // Success with no data (no content)
-  static const String BAD_REQUEST =
-      "Bad request. Try again later"; // Failure, API rejected request
-  static const String UNAUTORISED =
-      "User unauthorized. Try again later"; // Failure, user is not authorized
-  static const String FORBIDDEN =
-      "Forbidden request. Try again later"; // Failure, API rejected request
+  static const String SUCCESS = "Success";
+  static const String NO_CONTENT = "Success with no content";
+  static const String BAD_REQUEST = "Bad request. Try again later";
+  static const String UNAUTORISED = "User unauthorized. Try again later";
+  static const String FORBIDDEN = "Forbidden request. Try again later";
   static const String INTERNAL_SERVER_ERROR =
-      "Something went wrong. Try again later"; // Failure, crash on the server side
-  static const String NOT_FOUND =
-      "URL not found. Try again later"; // Failure, resource not found
+      "Something went wrong. Try again later";
+  static const String NOT_FOUND = "URL not found. Try again later";
 
   // Local status codes
   static const String CONNECT_TIMEOUT = "Timeout. Try again later";

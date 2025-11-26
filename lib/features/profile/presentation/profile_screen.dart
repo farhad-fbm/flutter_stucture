@@ -5,9 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common_widgets/custom_app_bar.dart';
 import '../../../common_widgets/custom_scaffold.dart';
 import '../../../gen/assets.gen.dart';
-import '../../../helpers/all_routes.dart';
-import '../../../helpers/navigation_service.dart';
-import 'logout_modal.dart';
+
 
 final List<Map<String, dynamic>> profileOptions = [
   {

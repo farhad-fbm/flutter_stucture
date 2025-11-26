@@ -1,22 +1,21 @@
-// import 'package:flutter/material.dart';
-// import '../common_widgets/loading_indicators.dart';
+import 'package:flutter/material.dart';
+import '../common_widgets/custom_loading_indictor.dart';
+import 'navigation_service.dart';
 
-// import 'navigation_service.dart';
+extension Loader on Future {
+  Future<dynamic> waitingForFutureWithoutBg() async {
+    showDialog(
+      context: NavigationService.context,
+      builder: (context) => loadingIndicatorCircle(context: context),
+    );
 
-// extension Loader on Future {
-//   Future<dynamic> waitingForFutureWithoutBg() async {
-//     showDialog(
-//       context: NavigationService.context,
-//       builder: (context) => loadingIndicatorCircle(context: context),
-//     );
-
-//     try {
-//       // Wait for the original future to complete
-//       dynamic result = await this;
-//       return result;
-//     } finally {
-//       // Close the loading dialog
-//       NavigationService.goBack;
-//     }
-//   }
-// }
+    try {
+      // Wait for the original future to complete
+      dynamic result = await this;
+      return result;
+    } finally {
+      // Close the loading dialog
+      NavigationService.goBack;
+    }
+  }
+}

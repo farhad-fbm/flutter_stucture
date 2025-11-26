@@ -19,7 +19,7 @@ enum DataSource {
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
   OTP_VERIFY,
-  DEFAULT
+  DEFAULT,
 }
 
 extension DataSourceExtension on DataSource {
@@ -31,34 +31,50 @@ extension DataSourceExtension on DataSource {
         return Failure(ResponseCode.NO_CONTENT, ResponseMessage.NO_CONTENT.tr);
       case DataSource.BAD_REQUEST:
         return Failure(
-            ResponseCode.BAD_REQUEST, ResponseMessage.BAD_REQUEST.tr);
+          ResponseCode.BAD_REQUEST,
+          ResponseMessage.BAD_REQUEST.tr,
+        );
       // case DataSource.FORBIDDEN:
       //   return Failure(ResponseCode.FORBIDDEN, ResponseMessage.FORBIDDEN.tr);
       case DataSource.UNAUTORISED:
         return Failure(
-            ResponseCode.UNAUTORISED, ResponseMessage.UNAUTORISED.tr);
+          ResponseCode.UNAUTORISED,
+          ResponseMessage.UNAUTORISED.tr,
+        );
       case DataSource.NOT_FOUND:
         return Failure(ResponseCode.NOT_FOUND, ResponseMessage.NOT_FOUND.tr);
       case DataSource.INTERNAL_SERVER_ERROR:
-        return Failure(ResponseCode.INTERNAL_SERVER_ERROR,
-            ResponseMessage.INTERNAL_SERVER_ERROR.tr);
+        return Failure(
+          ResponseCode.INTERNAL_SERVER_ERROR,
+          ResponseMessage.INTERNAL_SERVER_ERROR.tr,
+        );
       case DataSource.CONNECT_TIMEOUT:
         return Failure(
-            ResponseCode.CONNECT_TIMEOUT, ResponseMessage.CONNECT_TIMEOUT.tr);
+          ResponseCode.CONNECT_TIMEOUT,
+          ResponseMessage.CONNECT_TIMEOUT.tr,
+        );
       case DataSource.CANCEL:
         return Failure(ResponseCode.CANCEL, ResponseMessage.CANCEL.tr);
       case DataSource.RECIEVE_TIMEOUT:
         return Failure(
-            ResponseCode.RECIEVE_TIMEOUT, ResponseMessage.RECIEVE_TIMEOUT.tr);
+          ResponseCode.RECIEVE_TIMEOUT,
+          ResponseMessage.RECIEVE_TIMEOUT.tr,
+        );
       case DataSource.SEND_TIMEOUT:
         return Failure(
-            ResponseCode.SEND_TIMEOUT, ResponseMessage.SEND_TIMEOUT.tr);
+          ResponseCode.SEND_TIMEOUT,
+          ResponseMessage.SEND_TIMEOUT.tr,
+        );
       case DataSource.CACHE_ERROR:
         return Failure(
-            ResponseCode.CACHE_ERROR, ResponseMessage.CACHE_ERROR.tr);
+          ResponseCode.CACHE_ERROR,
+          ResponseMessage.CACHE_ERROR.tr,
+        );
       case DataSource.NO_INTERNET_CONNECTION:
-        return Failure(ResponseCode.NO_INTERNET_CONNECTION,
-            ResponseMessage.NO_INTERNET_CONNECTION.tr);
+        return Failure(
+          ResponseCode.NO_INTERNET_CONNECTION,
+          ResponseMessage.NO_INTERNET_CONNECTION.tr,
+        );
       case DataSource.OTP_VERIFY:
         return Failure(ResponseCode.OTP_VERIFY, ResponseMessage.OTP_VERIFY);
       case DataSource.DEFAULT:
@@ -106,8 +122,10 @@ final class ErrorHandler implements Exception {
         if (error.response != null &&
             error.response?.statusCode != null &&
             error.response?.statusMessage != null) {
-          return Failure(error.response?.statusCode ?? 0,
-              error.response?.statusMessage ?? "");
+          return Failure(
+            error.response?.statusCode ?? 0,
+            error.response?.statusMessage ?? "",
+          );
         } else {
           return DataSource.DEFAULT.getFailure();
         }

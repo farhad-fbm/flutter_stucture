@@ -28,24 +28,8 @@ final class Endpoints {
   static String profile() => "/api/user/profile/get";
   static String updateProfile() => "/api/profile/update/user";
   static String changePassword() => "/api/password/update/user";
-  static String support() => "/api/contact-form";
-  static String questionaries() => "/api/all/questions";
-  static String questionAnswer() => "/api/questions/answer";
-  static String articles() => "/api/article/list";
-  static String products() => "/api/product/list/retrieve";
-  static String addToCart() => "/api/add/to/cart";
-  static String cartList() => "/api/cart/list";
-  static String plusCart() => "/api/cart/qty/plus";
-  static String minusCart() => "/api/cart/qty/minus";
-  static String removeCart() => "/api/remove/cart/item";
-  static String checkout() => "/api/checkout";
-  static String orderList() => "/api/order/list";
-  static String chatList() => "/api/chat/list";
-  static String sendMessage() => "/api/chat/send";
-  static String getChat(String conversationId) =>
-      "/api/chat/get/$conversationId";
-  // static String getShopByCategories(String slug) =>
-  //     "/api/shop-categories/$slug/";
 
-  static String example() => "/api/";
+  static String getChat(String chatId) => "/api/chat/get/$chatId";
+
+  static String example() => "/api/...";
 }

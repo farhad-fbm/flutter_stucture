@@ -1,5 +1,3 @@
-import 'dart:io';
-
 class GlobalState {
   static final GlobalState _instance = GlobalState._internal();
   factory GlobalState() => _instance;
@@ -12,15 +10,5 @@ class GlobalState {
 
   String? getRole() {
     return userRole;
-  }
-
-  //-------------------------
-  File? pickedImage;
-  void setPickedImage(File image) {
-    pickedImage = image;
-  }
-
-  File? getPickedImage() {
-    return pickedImage;
   }
 }
