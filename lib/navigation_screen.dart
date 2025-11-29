@@ -2,38 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/gen/assets.gen.dart';
+
+import 'gen/colors.gen.dart';
 import 'helpers/helper_methods.dart';
 
-// ignore: must_be_immutable
 class NavigationScreen extends StatefulWidget {
-  final int? initialIndex;
-  const NavigationScreen({super.key, this.initialIndex});
+  final int? index;
+  const NavigationScreen({super.key, this.index});
 
   @override
   State<NavigationScreen> createState() => _NavigationScreenState();
 }
 
 class _NavigationScreenState extends State<NavigationScreen> {
-  late int _currentIndex;
-  bool search = false;
+  late int activeIndex;
   List<Widget> _screens = [];
 
   @override
   void initState() {
     super.initState();
-
-    _currentIndex = 0;
+    activeIndex = widget.index ?? 0;
     _screens = [
-      // const HomeScreen(),
-      // const HistoryScreen(),
-      // const CartScreen(),
-      // const ProfileScreen(),
+      // const HomeRootScreen(),
+      // const ScanRootScreen(),
+      // const HistoryRootScreen(),
+      // const ProfileHome(),
     ];
   }
 
   void _onItemTapped(int index) async {
     setState(() {
-      _currentIndex = index;
+      activeIndex = index;
     });
   }
 
@@ -43,9 +42,9 @@ class _NavigationScreenState extends State<NavigationScreen> {
       canPop: false,
       onPopInvokedWithResult: (didPop, result) async {
         if (didPop) return;
-        if (_currentIndex != 0) {
+        if (activeIndex != 0) {
           setState(() {
-            _currentIndex = 0;
+            activeIndex = 0;
           });
           return;
         }
@@ -53,114 +52,78 @@ class _NavigationScreenState extends State<NavigationScreen> {
         if (shouldExit == true) {
           SystemNavigator.pop();
         }
-      }, 
+      },
       child: Scaffold(
-        body: _screens[_currentIndex],
-        bottomNavigationBar: Container(
-          height: 64.h,
-          margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFFFFF),
-            borderRadius: BorderRadius.circular(50.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: .3),
-                blurRadius: 10.r,
-                offset: Offset(0, 4.h),
-              ),
-            ],
-          ),
+        body: _screens[activeIndex],
 
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ...List.generate(navItems.length, (index) {
-                final item = navItems[index];
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: InkWell(
-                    enableFeedback: false,
-                    borderRadius: BorderRadius.circular(50.r),
-                    onTap: () => _onItemTapped(index),
-                    child:
-                        BottomNavBarItem(
-                          iconPath: item['iconPath']!,
-                          title: item['label']!,
-                          isActive: _currentIndex == index,
-                        ).buildWidget(),
-                  ),
-                );
-              }),
-            ],
-          ),
+        bottomNavigationBar: NavBarItems(
+          currentIndex: activeIndex,
+          onItemTapped: _onItemTapped,
         ),
       ),
     );
   }
 }
 
-class BottomNavBarItem {
-  String title;
-  String iconPath;
-  bool isActive;
+class NavBarItems extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onItemTapped;
 
-  BottomNavBarItem({
-    required this.title,
-    required this.iconPath,
-    required this.isActive,
+  NavBarItems({
+    required this.currentIndex,
+    required this.onItemTapped,
+    super.key,
   });
-
-  Widget buildWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        isActive
-            ? Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-              decoration: BoxDecoration(
-                color: const Color(0xFF4B9954),
-                borderRadius: BorderRadius.circular(50.r),
-              ),
-
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    iconPath,
-                    color: const Color(0xFFFFFFFF),
-                    height: 30.h,
-                    width: 30.h,
-                  ),
-                  SizedBox(width: 8.w),
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: const Color(0xFFFFFFFF),
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w600,
+  final List<Map<String, String>> navItems = [
+    {'label': 'Home', 'iconPath': Assets.icons.bell.path},
+    {'label': 'Scan', 'iconPath': Assets.icons.camera.path},
+    {'label': 'History', 'iconPath': Assets.icons.call.path},
+    {'label': 'Profile', 'iconPath': Assets.icons.profile.path},
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: AppColors.c252A32,
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 1.h,
+            width: double.infinity,
+            color: AppColors.cFFFFFF.withValues(alpha: .7),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: List.generate(navItems.length, (index) {
+                final item = navItems[index];
+                final isSelected = index == currentIndex;
+                return InkWell(
+                  onTap: () => onItemTapped(index),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 8.h,
+                    ),
+                    child: Image.asset(
+                      item['iconPath']!,
+                      color:
+                          isSelected
+                              ? AppColors.allPrimaryColor
+                              : AppColors.cFFFFFF,
+                      height: 38.h,
+                      width: 38.w,
                     ),
                   ),
-                ],
-              ),
-            )
-            : Container(
-              margin: EdgeInsets.symmetric(horizontal: 2.w),
-              child: Image.asset(
-                iconPath,
-                color: const Color(0xFF000000),
-                height: 30.h,
-                width: 30.h,
-              ),
+                );
+              }),
             ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
-
-// --- Shared Nav Data ---
-final List<Map<String, String>> navItems = [
-  // {'label': 'Home', 'iconPath': Assets.icons..path},
-  // {'label': 'History', 'iconPath': Assets.icons.history.path},
-  // {'label': 'Earnings ', 'iconPath': Assets.icons.earning.path},
-  {'label': 'Profile', 'iconPath': Assets.icons.profile.path},
-];

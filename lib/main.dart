@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -49,27 +50,34 @@ class UtillScreenMobile extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, child) {
-        return GetMaterialApp(
-          initialRoute: '/',
-          darkTheme: ThemeData.light(),
-          debugShowCheckedModeBanner: false,
-          navigatorKey: NavigationService.navigatorKey,
-          onGenerateRoute: RouteGenerator.generateRoute,
-          theme: ThemeData(
-            unselectedWidgetColor: Colors.white,
-            primarySwatch: Colors.blue,
-            primaryColor: const Color(0xFFFFFFFF),
-            useMaterial3: false,
-            scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color(0xFFFFFFFF),
-              elevation: 0,
-            ),
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: const SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent,
+            statusBarIconBrightness: Brightness.light, // White icons (Android)
+            statusBarBrightness: Brightness.dark, // White icons (iOS)
           ),
-          builder: (context, widget) {
-            return MediaQuery(data: MediaQuery.of(context), child: widget!);
-          },
-          home: const Loading(),
+          child: GetMaterialApp(
+            initialRoute: '/',
+            darkTheme: ThemeData.light(),
+            debugShowCheckedModeBanner: false,
+            navigatorKey: NavigationService.navigatorKey,
+            onGenerateRoute: RouteGenerator.generateRoute,
+            theme: ThemeData(
+              unselectedWidgetColor: Colors.white,
+              primarySwatch: Colors.blue,
+              primaryColor: const Color(0xFFFFFFFF),
+              useMaterial3: false,
+              scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+              appBarTheme: const AppBarTheme(
+                backgroundColor: Color(0xFFFFFFFF),
+                elevation: 0,
+              ),
+            ),
+            builder: (context, widget) {
+              return MediaQuery(data: MediaQuery.of(context), child: widget!);
+            },
+            home: const Loading(),
+          ),
         );
       },
     );

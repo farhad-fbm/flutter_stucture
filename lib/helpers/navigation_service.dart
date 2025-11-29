@@ -29,7 +29,7 @@ final class NavigationService {
     Map<String, dynamic>? map,
   ) => navigatorKey.currentState!.pushNamed(routeName, arguments: map);
 
-  static Future<dynamic> popAndReplaceWihArgs(
+  static Future<dynamic> popAndReplaceWithArgs(
     String routeName,
     Map<String, dynamic>? map,
   ) => navigatorKey.currentState!.popAndPushNamed(routeName, arguments: map);

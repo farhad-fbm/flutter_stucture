@@ -9,6 +9,7 @@ import '../features/auth/presentation/reset_password_screen.dart';
 import '../features/auth/presentation/signin_screen.dart';
 import '../features/auth/presentation/signup_screen.dart';
 import '../features/auth/onboarding/custom_onboarding.dart';
+import '../navigation_screen.dart';
 
 final class Routes {
   static final Routes _routes = Routes._internal();
@@ -16,6 +17,7 @@ final class Routes {
   static Routes get instance => _routes;
 
   static const String onboardingScreen = '/onboardingScreen';
+  static const String navigationScreen = '/navigationScreen';
   static const String authHome = '/authHome';
   static const String signInScreen = '/signInScreen';
   static const String signUpScreen = '/signUpScreen';
@@ -38,6 +40,11 @@ final class RouteGenerator {
       //         ? _FadedTransitionRoute(widget: screen, settings: settings)
       //         : CupertinoPageRoute(builder: (context) => screen);
 
+      case Routes.navigationScreen:
+        Widget screen = const NavigationScreen();
+        return Platform.isAndroid
+            ? _FadedTransitionRoute(widget: screen, settings: settings)
+            : CupertinoPageRoute(builder: (context) => screen);
       case Routes.authHome:
         Widget screen = const AuthHome();
         return Platform.isAndroid
