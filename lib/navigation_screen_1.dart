@@ -56,7 +56,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       child: Scaffold(
         body: _screens[activeIndex],
 
-        bottomNavigationBar: NavBarAllItems(
+        bottomNavigationBar: CustomNavBar(
           currentIndex: activeIndex,
           onItemTapped: _onItemTapped,
         ),
@@ -67,11 +67,11 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
 // ------------------- NAV BAR ITEMS WIDGET ------------------ //
 
-class NavBarAllItems extends StatelessWidget {
+class CustomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onItemTapped;
 
-  NavBarAllItems({
+  CustomNavBar({
     required this.currentIndex,
     required this.onItemTapped,
     super.key,
@@ -112,10 +112,9 @@ class NavBarAllItems extends StatelessWidget {
                     ),
                     child: Image.asset(
                       item['iconPath']!,
-                      color:
-                          isSelected
-                              ? AppColors.allPrimaryColor
-                              : AppColors.cFFFFFF,
+                      color: isSelected
+                          ? AppColors.allPrimaryColor
+                          : AppColors.cFFFFFF,
                       height: 38.h,
                       width: 38.w,
                     ),

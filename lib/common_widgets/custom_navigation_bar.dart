@@ -16,6 +16,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavBarAllItems(currentIndex: activeIndex!, onItemTapped: onItemTapped);
+    return CustomNavBar(currentIndex: activeIndex!, onItemTapped: onItemTapped);
   }
 }

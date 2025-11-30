@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/gen/assets.gen.dart';
-
 import 'features/screens/cart_screen.dart';
 import 'features/screens/chat_screen.dart';
 import 'features/screens/home_screen.dart';
@@ -20,7 +19,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   late int activeIndex;
-  List<Widget> _screens = [];
+  late List<Widget> _screens;
 
   @override
   void initState() {
@@ -60,7 +59,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       child: Scaffold(
         body: _screens[activeIndex],
 
-        bottomNavigationBar: NavBarAllItems(
+        bottomNavigationBar: CurvedBottomNavBar(
           currentIndex: activeIndex,
           onItemTapped: _onItemTapped,
         ),
@@ -69,67 +68,186 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 }
 
-// ------------------- NAV BAR ITEMS WIDGET ------------------ //
+// ------------------------------------------------------------
+// CURVED BOTTOM BAR (WITH ANIMATION ADDED)
+// ------------------------------------------------------------
 
-class NavBarAllItems extends StatelessWidget {
+class CurvedBottomNavBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onItemTapped;
 
-  NavBarAllItems({
+  const CurvedBottomNavBar({
+    super.key,
     required this.currentIndex,
     required this.onItemTapped,
-    super.key,
   });
-  final List<Map<String, String>> navItems = [
-    {'label': 'Home', 'iconPath': Assets.icons.bell.path},
-    {'label': 'Scan', 'iconPath': Assets.icons.camera.path},
-    {'label': 'History', 'iconPath': Assets.icons.call.path},
-    {'label': 'Profile', 'iconPath': Assets.icons.profile.path},
-  ];
+
+  @override
+  CurvedBottomNavBarState createState() => CurvedBottomNavBarState();
+}
+
+class CurvedBottomNavBarState extends State<CurvedBottomNavBar>
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  double animatedIndex = 0;
+  int previousIndex = 0;
+
+  @override
+  bool get wantKeepAlive => true; // 🔥 keep state alive
+
+  @override
+  void initState() {
+    super.initState();
+    animatedIndex = widget.currentIndex.toDouble();
+    previousIndex = widget.currentIndex;
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant CurvedBottomNavBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.currentIndex != widget.currentIndex) {
+      previousIndex = animatedIndex.floor();
+
+      _animation =
+          Tween<double>(
+              begin: previousIndex.toDouble(),
+              end: widget.currentIndex.toDouble(),
+            ).animate(
+              CurvedAnimation(
+                parent: _controller,
+                curve: Curves.easeInOutCubic, // 🔥 very smooth curve
+              ),
+            )
+            ..addListener(() {
+              setState(() {
+                animatedIndex = _animation.value;
+              });
+            });
+
+      _controller.forward(from: 0);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: AppColors.c252A32,
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            height: 1.h,
-            width: double.infinity,
-            color: AppColors.cFFFFFF.withValues(alpha: .7),
+    super.build(context);
+    double height = 80;
+
+    final List<Map<String, String>> navItems = [
+      {'label': 'Home', 'iconPath': Assets.icons.bell.path},
+      {'label': 'Scan', 'iconPath': Assets.icons.camera.path},
+      {'label': 'History', 'iconPath': Assets.icons.call.path},
+      {'label': 'Profile', 'iconPath': Assets.icons.profile.path},
+    ];
+
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        // BACKGROUND CURVE
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: CustomPaint(
+            painter: NavBarPainter(animatedIndex),
+            child: Container(height: height),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.h),
+        ),
+
+        // ICONS
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: SizedBox(
+            height: height,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: List.generate(navItems.length, (index) {
-                final item = navItems[index];
-                final isSelected = index == currentIndex;
-                return InkWell(
-                  onTap: () => onItemTapped(index),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 16.w,
-                      vertical: 8.h,
+                bool isActive = index == widget.currentIndex;
+
+                return GestureDetector(
+                  onTap: () => widget.onItemTapped(index),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    padding: EdgeInsets.only(
+                      top: isActive ? 10.h : 0.h,
+                      left: 16.w,
+                      right: 16.w,
                     ),
+                    alignment: Alignment.center,
                     child: Image.asset(
-                      item['iconPath']!,
-                      color:
-                          isSelected
-                              ? AppColors.allPrimaryColor
-                              : AppColors.cFFFFFF,
-                      height: 38.h,
-                      width: 38.w,
+                      navItems[index]['iconPath']!,
+                      color: isActive
+                          ? AppColors.allPrimaryColor
+                          : AppColors.cFFFFFF,
+                      height: isActive ? 38.h : 30.h,
+                      width: isActive ? 38.w : 30.w,
                     ),
                   ),
                 );
               }),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
+}
+
+// ------------------------------------------------------------
+// PAINTER
+// ------------------------------------------------------------
+
+class NavBarPainter extends CustomPainter {
+  final double animatedIndex;
+  NavBarPainter(this.animatedIndex);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = const Color(0xFF252A32)
+      ..style = PaintingStyle.fill;
+
+    final path = Path();
+
+    double width = size.width / 4;
+    double curveHeight = 10;
+    double center = width * animatedIndex + width / 2;
+
+    // Straight → curve start
+    path.moveTo(0, 0);
+    path.lineTo(center - 30, 0);
+
+    // Custom polished curve
+    path.quadraticBezierTo(center - 22, 0, center - 10, curveHeight);
+    path.quadraticBezierTo(center, curveHeight + 12, center + 10, curveHeight);
+    path.quadraticBezierTo(center + 18, 0, center + 30, 0);
+
+    // Close shape
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+
+    canvas.drawPath(path, paint);
+
+    // Dot indicator
+    final dotPaint = Paint()
+      ..color = Colors.blue
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(Offset(center, 4), 6, dotPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
