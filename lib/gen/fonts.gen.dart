@@ -11,15 +11,15 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: DMSans_Bold
-  static const String dMSansBold = 'DMSans_Bold';
+  /// Font family: DM_Sans_Bold
+  static const String dMSansBold = 'DM_Sans_Bold';
 
-  /// Font family: DMSans_Medium
-  static const String dMSansMedium = 'DMSans_Medium';
+  /// Font family: DM_Sans_Medium
+  static const String dMSansMedium = 'DM_Sans_Medium';
 
-  /// Font family: DMSans_Regular
-  static const String dMSansRegular = 'DMSans_Regular';
+  /// Font family: DM_Sans_Regular
+  static const String dMSansRegular = 'DM_Sans_Regular';
 
-  /// Font family: DMSans_SemiBold
-  static const String dMSansSemiBold = 'DMSans_SemiBold';
+  /// Font family: DM_Sans_SemiBold
+  static const String dMSansSemiBold = 'DM_Sans_SemiBold';
 }

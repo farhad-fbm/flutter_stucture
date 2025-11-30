@@ -1,4 +1,4 @@
-package com.example.dart_stucture
+package com.example.slutter_structure
 
 import io.flutter.embedding.android.FlutterActivity
 

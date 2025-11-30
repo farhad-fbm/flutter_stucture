@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../helpers/navigation_service.dart';
 import '../../helpers/all_routes.dart';
-import '../navigation_screen.dart';
+import '../navigation_screen_1.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int? activeIndex;
@@ -16,6 +16,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NavBarItems(currentIndex: activeIndex!, onItemTapped: onItemTapped);
+    return NavBarAllItems(currentIndex: activeIndex!, onItemTapped: onItemTapped);
   }
 }

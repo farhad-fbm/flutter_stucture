@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "dart_stucture" "\0"
+            VALUE "FileDescription", "slutter_structure" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "dart_stucture" "\0"
+            VALUE "InternalName", "slutter_structure" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "dart_stucture.exe" "\0"
-            VALUE "ProductName", "dart_stucture" "\0"
+            VALUE "OriginalFilename", "slutter_structure.exe" "\0"
+            VALUE "ProductName", "slutter_structure" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -3,10 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '/gen/assets.gen.dart';
 
-import 'features/screens/cart_screen.dart';
-import 'features/screens/chat_screen.dart';
-import 'features/screens/home_screen.dart';
-import 'features/screens/settings_screen.dart';
 import 'gen/colors.gen.dart';
 import 'helpers/helper_methods.dart';
 
@@ -27,10 +23,10 @@ class _NavigationScreenState extends State<NavigationScreen> {
     super.initState();
     activeIndex = widget.index ?? 0;
     _screens = [
-      const HomeScreen(),
-      const CartScreen(),
-      const ChatScreen(),
-      const SettingsScreen(),
+      // const HomeScreenDeliveryman(),
+      // const HistoryScreenDeliveryman(),
+      // const EarningsScreen(),
+      // const ProfileScreen(),
     ];
   }
 
