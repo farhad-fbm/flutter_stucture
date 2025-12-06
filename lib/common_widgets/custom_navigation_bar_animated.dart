@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../helpers/navigation_service.dart';
 import '../../helpers/all_routes.dart';
-import '../navigation_screen.dart';
+import '../navigation_screen_animated.dart';
 
-class CustomBottomNavigationBar extends StatelessWidget {
+class CustomNavigationBarAnimated extends StatelessWidget {
   final int? activeIndex;
 
-  const CustomBottomNavigationBar({this.activeIndex = 0, super.key});
-
+  const CustomNavigationBarAnimated({this.activeIndex = 0, super.key});
   void onItemTapped(int index) {
     NavigationService.popAndReplaceWithArgs(Routes.navigationScreen, {
       'index': index,
@@ -16,6 +15,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBottomNavBar(activeIndex: activeIndex!, onItemTapped: onItemTapped);
+    return CustomCurvedNavBar(
+      currentIndex: activeIndex!,
+      onItemTapped: onItemTapped,
+    );
   }
 }

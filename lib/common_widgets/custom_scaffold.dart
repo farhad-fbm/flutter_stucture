@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../gen/colors.gen.dart';
-
 class CustomScaffold extends StatelessWidget {
   final Color backgroundColor;
   final bool lightIcons;
@@ -11,7 +9,7 @@ class CustomScaffold extends StatelessWidget {
 
   const CustomScaffold({
     super.key,
-    this.backgroundColor = AppColors.bgColor,
+    this.backgroundColor = Colors.black,
     this.lightIcons = true,
     required this.body,
     this.bottomNavigationBar,
@@ -22,11 +20,13 @@ class CustomScaffold extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarIconBrightness:
-            lightIcons ? Brightness.light : Brightness.dark,
+        statusBarIconBrightness: lightIcons
+            ? Brightness.light
+            : Brightness.dark,
         systemNavigationBarColor: backgroundColor,
-        systemNavigationBarIconBrightness:
-            lightIcons ? Brightness.light : Brightness.dark,
+        systemNavigationBarIconBrightness: lightIcons
+            ? Brightness.light
+            : Brightness.dark,
       ),
     );
 

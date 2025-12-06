@@ -6,7 +6,7 @@ import '../../../../common_widgets/custom_button.dart';
 import '../../../helpers/all_routes.dart';
 import '../../../helpers/navigation_service.dart';
 
-void logoutModal(BuildContext context) {
+void customModal(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false,

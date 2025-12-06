@@ -8,7 +8,7 @@ import 'helpers/all_routes.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/navigation_service.dart';
-import 'navigation_screen.dart';
+import 'loading_screen.dart';
 import 'networks/dio/dio.dart';
 
 void main() async {
@@ -76,7 +76,7 @@ class UtillScreenMobile extends StatelessWidget {
             builder: (context, widget) {
               return MediaQuery(data: MediaQuery.of(context), child: widget!);
             },
-            home: const NavigationScreen(),
+            home: const LoadingScreen(),
           ),
         );
       },

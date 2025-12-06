@@ -9,7 +9,7 @@ import '../features/auth/presentation/reset_password_screen.dart';
 import '../features/auth/presentation/signin_screen.dart';
 import '../features/auth/presentation/signup_screen.dart';
 import '../features/auth/onboarding/custom_onboarding.dart';
-import '../navigation_screen_1.dart';
+import '../navigation_screen.dart';
 
 final class Routes {
   static final Routes _routes = Routes._internal();

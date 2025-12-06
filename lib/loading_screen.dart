@@ -1,21 +1,22 @@
 import 'dart:async';
+import 'package:dart_stucture/navigation_screen.dart';
+import 'package:dart_stucture/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'constants/app_constants.dart';
-import 'features/auth/onboarding/custom_onboarding.dart';
 import 'helpers/di.dart';
 import 'helpers/helper_methods.dart';
 import 'helpers/post_login.dart';
 import 'networks/dio/dio.dart';
 
-final class Loading extends StatefulWidget {
-  const Loading({super.key});
+final class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
 
   @override
-  State<Loading> createState() => _LoadingState();
+  State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
-class _LoadingState extends State<Loading> {
+class _LoadingScreenState extends State<LoadingScreen> {
   bool _isLoading = true;
   bool isFirstTime = true;
   Timer? _timer;
@@ -53,9 +54,9 @@ class _LoadingState extends State<Loading> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return const OnboardingScreen();
+      return const WelcomeScreen();
     } else {
-      return const OnboardingScreen();
+      return const NavigationScreen();
     }
   }
 }

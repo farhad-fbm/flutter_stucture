@@ -6,7 +6,7 @@ class CustomButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final Color? borderColor;
-  final BorderSide? border;
+  final BorderSide? borderSide;
   final double borderRadius;
   final double? width;
   final EdgeInsetsGeometry? padding;
@@ -19,11 +19,11 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.borderColor,
-    this.border,
-    this.borderRadius = 100,
+    this.borderSide,
+    this.borderRadius = 12,
     this.width = double.infinity,
     this.padding = const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-    this.bgColor = const Color(0xFF4B9954),
+    this.bgColor = const Color(0xFF008BC1),
     this.foregroundColor = const Color(0xFFFFFFFF),
   });
 
@@ -40,19 +40,18 @@ class CustomButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: bgColor,
             borderRadius: BorderRadius.circular(borderRadius.r),
-            border:
-                border != null
-                    ? Border.fromBorderSide(border!)
-                    : borderColor != null
-                    ? Border.all(color: borderColor!, width: 1.w)
-                    : null,
+            border: borderSide != null
+                ? Border.fromBorderSide(borderSide!)
+                : borderColor != null
+                ? Border.all(color: borderColor!, width: 1.w)
+                : null,
           ),
 
           child: Row(
-            mainAxisAlignment:
-                icon != null
-                    ? MainAxisAlignment.spaceBetween
-                    : MainAxisAlignment.center,
+            spacing: 10.w,
+            mainAxisAlignment: icon != null
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.center,
             children: [
               if (icon != null) Image.asset(icon!, height: 24.h, width: 24.w),
 
@@ -62,7 +61,6 @@ class CustomButton extends StatelessWidget {
                   fontSize: 16,
                   color: foregroundColor,
                   fontWeight: FontWeight.w700,
-                  fontFamily: 'Poppins',
                 ),
               ),
 

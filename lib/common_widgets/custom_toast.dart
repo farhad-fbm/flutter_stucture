@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../gen/colors.gen.dart';
 
 SnackbarController customToastMessage({
   required String title,
@@ -12,19 +11,12 @@ SnackbarController customToastMessage({
     title,
     message,
     snackPosition: SnackPosition.TOP,
-    backgroundColor: bgColor ?? AppColors.c333842,
-    icon: Icon(Icons.info_outline, color: AppColors.allPrimaryColor),
+    backgroundColor: bgColor ?? Color(0xFF333842),
+    icon: Icon(Icons.info_outline, color: Color(0xFF0184FF)),
     titleText: Text(
       title,
-      style: TextStyle(color: textColor ?? AppColors.allPrimaryColor),
+      style: TextStyle(color: textColor ?? Color(0xFF0184FF)),
     ),
-    messageText: Text(
-      message,
-      style: TextStyle(
-        color:
-            textColor?.withValues(alpha: 0.5) ??
-            AppColors.allPrimaryColor.withValues(alpha: 0.5),
-      ),
-    ),
+    messageText: Text(message, style: TextStyle(color: Color(0xFF0184FF))),
   );
 }
